@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="50dp"
+    tools:context=".InfoFragment">
+
+    <!-- 상단 파란색 박스 -->
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:background="@drawable/blue_box">
+
+        <ScrollView
+            android:layout_width="116dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nicknameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="닉네임"
+                android:textSize="16sp" />
+
+
+        </ScrollView>
+    </FrameLayout>
+
+</LinearLayout>
