@@ -6,10 +6,32 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class IntroActivity extends AppCompatActivity {
+import com.example.main.NetworkThread;
+import com.example.network.INetworkModule;
+import com.example.network.NetworkModule;
 
+import java.net.Socket;
+
+public class IntroActivity extends AppCompatActivity {
+    public static NetworkThread networkThread;
+
+    public static INetworkModule networkModule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        try {
+            //Socket clientSocket = ServerCon.connectToServer();
+            networkThread = new NetworkThread();
+            networkThread.start();
+            //networkModule = new NetworkModule(clientSocket);
+            //networkModule.writeByte(1);
+            System.out.println("testAA");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("testSS");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 

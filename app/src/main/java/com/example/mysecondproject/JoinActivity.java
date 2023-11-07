@@ -13,7 +13,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.main.JoinHandler;
+import com.example.main.NetworkThread;
 import com.example.network.INetworkModule;
+import com.example.network.NetworkLiteral;
 import com.example.network.NetworkModule;
 import com.example.gui.AndroidView;
 import com.example.gui.Model;
@@ -31,13 +34,14 @@ import java.net.SocketAddress;
 import customfonts.MyTextView_Poppins_Medium;
 
 public class JoinActivity extends AndroidView {
+    JoinActivity joinActivity;
     private EditText editTextId;
     private EditText editTextPw;
     private EditText editTextNickname;
     private JoinModel j_model;
 
     //가입 후 팝업
-    private void showSuccessDialog() {
+    public void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         View dialogView = getLayoutInflater().inflate(R.layout.success_dialog, null);
@@ -67,6 +71,7 @@ public class JoinActivity extends AndroidView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        joinActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         MyTextView_Poppins_Medium backButton = findViewById(R.id.back);
@@ -95,7 +100,7 @@ public class JoinActivity extends AndroidView {
                 if (TextUtils.isEmpty(nickname) || TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
                     // 빈칸이 있을 경우, 에러 메세지 텍스트뷰에 메시지 설정
                     TextView errorTextView = findViewById(R.id.Error);
-                    errorTextView.setText("칸을 채워주세요");
+                    errorTextView.setText("빈칸을 채워주세요");
                     errorTextView.setTextColor(Color.RED); //
 
                     // 키패드 내리기
@@ -107,62 +112,17 @@ public class JoinActivity extends AndroidView {
                     ((EditText) findViewById(R.id.editTextPassword)).setText("");
                     return;
                 }
+
+
                 //기존코드라인
-                Socket clientSocket = ServerCon.connectToServer();
-                INetworkModule networkModule = new NetworkModule(clientSocket);
-                SocketAddress address = new InetSocketAddress("localhost", 28170);
+                JoinHandler joinHandler;
+                joinHandler = new JoinHandler(joinActivity, v);
+                JoinService joinService = new JoinService(joinHandler, account, password, nickname);
+                joinService.bindNetworkModule(IntroActivity.networkModule);
+                //System.out.println(Thread.currentThread().getName());
+                IntroActivity.networkThread.requestService(joinService);
 
-                networkModule.writeLine("JOIN_SERVICE");
 
-                try
-                {
-                    clientSocket.connect(address, 10 * 1000);
-
-                    NetworkModule netModule = new NetworkModule(clientSocket);
-                    netModule.writeByte(1);
-
-                    JoinService js = new JoinService("secondId2", "secondPw", "secondNk2");
-                    js.bindNetworkModule(netModule);
-                    js.tryExecuteService();
-
-                    String response = netModule.readLine();
-
-                    if (response.equals("DUPLICATE_ID")) {
-                        // 중복된 아이디 처리
-                        TextView errorTextView = findViewById(R.id.Error);
-                        errorTextView.setText("사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.");
-                        errorTextView.setTextColor(Color.RED);
-                        // 키패드 내리기
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                        //칸 비우기
-                        ((EditText) findViewById(R.id.editTextAccount)).setText("");
-
-                    } else if (response.equals("DUPLICATE_NICKNAME")) {
-                        // 중복된 닉네임 처리
-                        TextView errorTextView = findViewById(R.id.Error);
-                        errorTextView.setText("사용할 수 없는 닉네임입니다. 다른 닉네임을 입력해 주세요.");
-                        errorTextView.setTextColor(Color.RED);
-                        // 키패드 내리기
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                        //칸비우기
-                        ((EditText) findViewById(R.id.editTextNickname)).setText("");
-                    } else if(response.equals("SUCCESS")){
-                        // 정상적으로 처리된 경우
-                        // 회원가입 성공 팝업창 띄우기
-                        showSuccessDialog();
-                    }
-                    else{
-                        System.out.println("회원가입 문제1");
-                    }
-                }
-                catch (IOException e)
-                {
-                    System.out.println("Occured IOException.");
-                }
             }
         });
     }

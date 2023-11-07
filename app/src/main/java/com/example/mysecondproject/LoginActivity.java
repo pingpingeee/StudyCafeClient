@@ -12,7 +12,11 @@ import android.widget.TextView;
 
 import com.example.gui.AndroidView;
 import com.example.gui.Model;
+import com.example.main.JoinHandler;
+import com.example.main.LoginHandler;
 import com.example.main.model.JoinModel;
+import com.example.service.JoinService;
+import com.example.service.LoginService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,11 +26,12 @@ import java.net.Socket;
 import customfonts.MyTextView_Poppins_Medium;
 
 public class LoginActivity extends AndroidView {
-
+    LoginActivity loginActivity;
     private JoinModel l_model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loginActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -62,58 +67,14 @@ public class LoginActivity extends AndroidView {
                     return;
                 }
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Socket clientSocket = ServerCon.connectToServer();
+                LoginHandler loginHandler;
+                loginHandler = new LoginHandler(loginActivity, v);
+                LoginService loginService = new LoginService(loginHandler, account, password);
+                loginService.bindNetworkModule(IntroActivity.networkModule);
+                //System.out.println(Thread.currentThread().getName());
+                IntroActivity.networkThread.requestService(loginService);
 
-                            if (clientSocket != null) {
-                                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                                out.println("LOGIN_SERVICE");
-                                //out.println("(클래스통합으로 아무거나 하나 보내줘여함..)");
-                                out.println(account);
-                                out.println(password);
-
-                                String response = in.readLine();
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (response != null && response.equals("LOGIN_SUCCESS")) {
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        } else {
-                                            TextView errorTextView = findViewById(R.id.Error);
-                                            errorTextView.setText("아이디 또는 비밀번호가 올바르지 않습니다.");
-                                            // 키패드 내리기
-                                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                                            // 아이디와 비밀번호 입력 칸 비우기
-                                            ((EditText) findViewById(R.id.editTextAccount)).setText("");
-                                            ((EditText) findViewById(R.id.editTextPassword)).setText("");
-
-                                            /*System.out.println("Account: " + account);
-                                            System.out.println("Password: " + password);
-                                            System.out.println("Response: " + response);*/
-
-                                            errorTextView.setTextColor(Color.RED);
-                                        }
-                                    }
-                                });
-
-                                clientSocket.close();
-                            } else {
-                                System.out.println("연결실패");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
             }
         });
     }
