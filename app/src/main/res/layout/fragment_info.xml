@@ -4,32 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="50dp"
+
     tools:context=".InfoFragment">
 
-    <!-- 상단 파란색 박스 -->
-    <FrameLayout
-        android:layout_width="350dp"
-        android:layout_height="110dp"
-        android:layout_gravity="center"
-        android:background="@drawable/blue_box">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="116dp"
-            android:layout_height="match_parent">
+        <!--상단로고만들기-->
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@drawable/logo" />
 
-            <TextView
-                android:id="@+id/nicknameTextView"
+        <TextView
+            android:layout_marginTop="-15dp"
+            android:layout_marginBottom="-15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StudyCafe"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:padding="16dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#B3B3B3" />
+        <!-- 상단 파란색 박스 -->
+        <FrameLayout
+            android:layout_width="350dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:background="@drawable/blue_box">
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:text="닉네임"
-                android:textSize="16sp" />
-
-
-        </ScrollView>
-    </FrameLayout>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/nicknameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="닉네임"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>

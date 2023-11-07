@@ -1,16 +1,14 @@
 package com.example.mysecondproject;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.gui.AndroidView;
 import com.example.gui.Model;
 import com.example.gui.ModelManager;
-import com.example.handler.ButtonHandler;
-import com.example.handler.TextViewHandler;
-import com.example.main.MainModel;
+import com.example.main.model.MainModel;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AndroidView {

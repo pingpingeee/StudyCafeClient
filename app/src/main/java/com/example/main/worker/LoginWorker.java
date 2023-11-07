@@ -1,6 +1,7 @@
-package com.example.main;
+package com.example.main.worker;
 
 import com.example.gui.Worker;
+import com.example.main.model.LoginModel;
 
 public class LoginWorker extends Worker
 {

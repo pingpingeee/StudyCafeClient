@@ -1,6 +1,7 @@
-package com.example.main;
+package com.example.main.worker;
 
 import com.example.gui.Worker;
+import com.example.main.model.MainModel;
 
 public class MainWorker extends Worker
 {

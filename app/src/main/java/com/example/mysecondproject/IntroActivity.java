@@ -18,10 +18,11 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        },1000);
+        },10);  //1000으로 변경
     }
     @Override
     protected void onPause() {

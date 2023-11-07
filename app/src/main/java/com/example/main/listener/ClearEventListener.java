@@ -2,7 +2,7 @@ package com.example.main.listener;
 
 import android.view.View;
 
-import com.example.main.MainModel;
+import com.example.main.model.MainModel;
 
 public class ClearEventListener implements View.OnClickListener
 {

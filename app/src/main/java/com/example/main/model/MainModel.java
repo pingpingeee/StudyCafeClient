@@ -1,10 +1,7 @@
-package com.example.main;
+package com.example.main.model;
 
 import com.example.gui.Model;
-import com.example.gui.AndroidView;
-import com.example.mysecondproject.MainActivity;
-
-import java.util.Iterator;
+import com.example.main.worker.MainWorker;
 
 public class MainModel extends Model {
     private MainWorker m_worker;

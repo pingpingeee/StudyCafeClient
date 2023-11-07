@@ -18,9 +18,6 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".JoinActivity"
             android:exported="false" />
         <activity

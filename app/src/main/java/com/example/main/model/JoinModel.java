@@ -1,6 +1,7 @@
-package com.example.main;
+package com.example.main.model;
 
 import com.example.gui.Model;
+import com.example.main.worker.JoinWorker;
 
 public class JoinModel extends Model {
     private JoinWorker m_worker;

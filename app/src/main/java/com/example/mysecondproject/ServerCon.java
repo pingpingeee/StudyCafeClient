@@ -10,9 +10,9 @@ public class ServerCon {
     public static Socket connectToServer() {
 
         //본인아이피
-        final String SERVER_IP = "192.168.200.104";
+        final String SERVER_IP = "localhost";
         //포트
-        final int SERVER_PORT = 1;
+        final int SERVER_PORT = 28170;
         //사용법
 
         try {
