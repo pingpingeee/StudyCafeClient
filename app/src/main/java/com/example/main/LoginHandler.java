@@ -12,13 +12,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.example.gui.AndroidView;
+import com.example.mysecondproject.JoinActivity;
 import com.example.mysecondproject.LoginActivity;
 import com.example.mysecondproject.MainActivity;
 import com.example.mysecondproject.R;
 import com.example.service.LoginService;
 
 import org.jetbrains.annotations.NotNull;
+
+import customfonts.MyTextView_Poppins_Medium;
 
 public class LoginHandler extends Handler {
     public static String uuid;
@@ -42,6 +47,30 @@ public class LoginHandler extends Handler {
             Intent intent = new Intent(loginActivity, MainActivity.class);
             loginActivity.startActivity(intent);
         } else if(response.equals("<BLACKED_ACCOUNT>")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(loginActivity);
+
+                View dialogView = loginActivity.getLayoutInflater().inflate(R.layout.success_dialog, null);
+                builder.setView(dialogView);
+
+                customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
+                MyTextView_Poppins_Medium confirmButton = dialogView.findViewById(R.id.confirm_button);
+
+                dialogTitle.setText("블랙");
+                confirmButton.setText("확인");
+
+                AlertDialog dialog = builder.create();
+
+/*                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                        finish();
+                    }
+                });*/
+
+                dialog.show();
 
         } else if (response.equals("<FAILURE>")){
             TextView errorTextView = loginActivity.findViewById(R.id.Error);

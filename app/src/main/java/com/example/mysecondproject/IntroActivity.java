@@ -21,15 +21,10 @@ public class IntroActivity extends AppCompatActivity {
 
 
         try {
-            //Socket clientSocket = ServerCon.connectToServer();
             networkThread = new NetworkThread();
             networkThread.start();
-            //networkModule = new NetworkModule(clientSocket);
-            //networkModule.writeByte(1);
-            System.out.println("testAA");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("testSS");
         }
 
         super.onCreate(savedInstanceState);

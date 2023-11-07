@@ -17,8 +17,6 @@ public class NetworkThread extends StudyThread {
     public void run(){
         Socket clientSocket = ServerCon.connectToServer();
         IntroActivity.networkModule = new NetworkModule(clientSocket);
-/*        if(clientSocket == null) System.out.println("testnull");
-        else System.out.println("test notnull");*/
         IntroActivity.networkModule.writeByte(1);
         while(super.isRun()){
             while(serviceQueue.size() > 0){

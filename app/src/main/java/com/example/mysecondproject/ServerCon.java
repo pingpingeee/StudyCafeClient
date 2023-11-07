@@ -10,17 +10,15 @@ public class ServerCon {
     public static Socket connectToServer() {
 
         //본인아이피
-        final String SERVER_IP = "58.226.144.224";
+        final String SERVER_IP = "localhost";
         //포트
         final int SERVER_PORT = 28170;
 
         try {
             Socket clientSocket = new Socket(SERVER_IP, SERVER_PORT);
-            System.out.printf("testQ11111111111111111111111111111111");
             return clientSocket;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("testW2222222222222222222222222222222");
             return null;
         }
     }
