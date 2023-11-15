@@ -22,7 +22,6 @@ public final class NetworkLiteral
 		}
 	}
 
-	// NOTE: �ܺο��� �� ������ ��ü�� ������ �� �����ϴ�.
 	private NetworkLiteral()
 	{
 		

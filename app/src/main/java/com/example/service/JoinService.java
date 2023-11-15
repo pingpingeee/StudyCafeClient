@@ -35,7 +35,7 @@ public class JoinService implements INetworkService
         System.out.println("after");
         m_netModule.writeLine(m_id);
         m_netModule.writeLine(m_pw);
-        m_netModule.writeLine("1"); // NOTE: Client type, 1: customer, 2: provider
+        m_netModule.writeLine("1");
         m_netModule.writeLine(m_nickname);
         m_netModule.writeLine(NetworkLiteral.EOF);
 

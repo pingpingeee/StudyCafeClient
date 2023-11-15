@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".InfoFragment">
 
     <LinearLayout
@@ -12,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--상단로고만들기-->
+        <!-- 상단 로고 만들기 -->
         <ImageView
             android:layout_marginTop="5dp"
             android:layout_width="45dp"
@@ -28,20 +27,26 @@
             android:text="StudyCafe"
             android:textSize="10sp"
             android:layout_gravity="center"
-            android:padding="16dp"/>
+            android:padding="16dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#B3B3B3" />
+
         <!-- 상단 파란색 박스 -->
         <FrameLayout
+            android:layout_marginTop="80dp"
             android:layout_width="350dp"
-            android:layout_height="110dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:background="@drawable/blue_box">
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:orientation="vertical">
+
+                <!-- 닉네임 텍스트뷰 -->
                 <TextView
                     android:id="@+id/nicknameTextView"
                     android:layout_width="wrap_content"
@@ -49,10 +54,22 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:text="닉네임"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="40dp"
+                    android:text=""
+                    android:textSize="20sp" />
+
+                <!-- 아이디 텍스트뷰 -->
+                <TextView
+                    android:id="@+id/idTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
-
 </LinearLayout>

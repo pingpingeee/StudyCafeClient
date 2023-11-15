@@ -42,6 +42,8 @@
             android:padding="16dp"/>
 
 
+
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -263,5 +265,28 @@
                 </GridLayout>
             </LinearLayout>
         </HorizontalScrollView>
+        <customfonts.MyTextView_Poppins_Medium
+            android:id="@+id/buttonLogin"
+            android:layout_width="100dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="18.7dp"
+            android:layout_marginRight="62dp"
+            android:background="@drawable/blue_box"
+            android:gravity="center"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:layout_marginBottom="20dp"
+            android:text="날짜 선택"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:text="날짜들어올 텍스트박스"/>
     </LinearLayout>
 </LinearLayout>

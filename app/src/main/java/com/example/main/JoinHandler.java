@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.example.mysecondproject.*;
+
 import androidx.annotation.NonNull;
 
 import com.example.mysecondproject.JoinActivity;
@@ -27,10 +27,8 @@ public class JoinHandler extends Handler {
     @Override
     public void handleMessage(@NonNull Message message){
         super.handleMessage(message);
-        //System.out.println("test"+Thread.currentThread().getName());
         Bundle bundle = message.getData();
         String response = bundle.getString("response");
-        //System.out.println(response);
 
 
         if (response.equals("<DUPLICATED_ID>")) {

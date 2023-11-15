@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".InfoFragment">
+    tools:context=".SettingFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,20 @@
 
 
         <!-- 상단 파란색 박스 -->
+        <FrameLayout
+            android:layout_marginTop="80dp"
+            android:layout_width="350dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/blue_box">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:orientation="vertical">
 
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -8,9 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.main.NetworkThread;
 import com.example.network.INetworkModule;
-import com.example.network.NetworkModule;
-
-import java.net.Socket;
 
 public class IntroActivity extends AppCompatActivity {
     public static NetworkThread networkThread;
@@ -34,8 +31,8 @@ public class IntroActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }

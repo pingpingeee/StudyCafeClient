@@ -14,22 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.main.JoinHandler;
-import com.example.main.NetworkThread;
-import com.example.network.INetworkModule;
-import com.example.network.NetworkLiteral;
-import com.example.network.NetworkModule;
 import com.example.gui.AndroidView;
 import com.example.gui.Model;
 import com.example.main.model.JoinModel;
 import com.example.service.JoinService;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
 
 import customfonts.MyTextView_Poppins_Medium;
 

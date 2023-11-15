@@ -1,8 +1,5 @@
 package com.example.mysecondproject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ServerCon {
@@ -10,9 +7,9 @@ public class ServerCon {
     public static Socket connectToServer() {
 
         //본인아이피
-        final String SERVER_IP = "localhost";
+        final String SERVER_IP = "192.168.200.104";
         //포트
-        final int SERVER_PORT = 28170;
+        final int SERVER_PORT = 25565;
 
         try {
             Socket clientSocket = new Socket(SERVER_IP, SERVER_PORT);

@@ -10,25 +10,45 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.example.gui.AndroidView;
 import com.example.gui.Model;
-import com.example.main.JoinHandler;
 import com.example.main.LoginHandler;
 import com.example.main.model.JoinModel;
-import com.example.service.JoinService;
 import com.example.service.LoginService;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 import customfonts.MyTextView_Poppins_Medium;
 
 public class LoginActivity extends AndroidView {
     LoginActivity loginActivity;
     private JoinModel l_model;
+    public void showfailDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+        builder.setView(dialogView);
+
+        customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
+        MyTextView_Poppins_Medium confirmButton = dialogView.findViewById(R.id.confirm_button);
+
+        dialogTitle.setText("이용이 정지된 계정입니다.");
+        confirmButton.setText("확인");
+
+        AlertDialog dialog = builder.create();
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        dialog.show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         loginActivity = this;
