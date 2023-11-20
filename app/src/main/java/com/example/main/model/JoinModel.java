@@ -12,5 +12,3 @@ public class JoinModel extends Model {
         m_worker = new JoinWorker(this);
     }
 }
-
-

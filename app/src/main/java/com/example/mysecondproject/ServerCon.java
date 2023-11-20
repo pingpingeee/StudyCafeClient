@@ -7,7 +7,8 @@ public class ServerCon {
     public static Socket connectToServer() {
 
         //본인아이피
-        final String SERVER_IP = "아이피입력";
+        //final String SERVER_IP = "192.168.200.104";
+        final String SERVER_IP = "58.226.144.224";
         //포트
         final int SERVER_PORT = 25565;
 

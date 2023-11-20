@@ -26,7 +26,17 @@ import customfonts.MyTextView_Poppins_Medium;
 
 public class HomeFragment extends Fragment {
     private TextView textViewDate;
-    private Map<String, String[]> seatReservedTimes = new HashMap<>();
+    private String[] seatReservedTimes;
+    private String seatNum;
+    private String uuId;
+    private String startTime;
+    private String endTime;
+    private String selectedDate;
+
+    public String getSelectedDate() {
+        return selectedDate;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setAppLocale("ko");
@@ -34,7 +44,6 @@ public class HomeFragment extends Fragment {
         textViewDate = view.findViewById(R.id.textViewDate);
 
         // 오늘 날짜를 설정
-        setTodayDate();
         setTodayDate();
 
         //날짜선택버튼
@@ -50,54 +59,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
-    //지역불러오고 그에 맞는 언어설정해주기(캘린더)
-    private void setAppLocale(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-    }
-
-
-    private void setTodayDate() {
-        // 현재 날짜를 가져오기
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String todayDate = "선택된 날짜 : " + dateFormat.format(calendar.getTime());
-
-        // 가져온 날짜를 TextView에 설정(이건 사용자용)
-        // TODO:서버로 보내는것도 추가해야함
-        textViewDate.setText(todayDate);
-    }
-
-
-    // 날짜선택 다이얼로그
-    private void showDatePicker() {
-        // 현재 날짜 가져오기
-        final Calendar calendar = Calendar.getInstance();
-        //현재날짜에 10일 추가하고 90라인을 따라감
-        calendar.add(Calendar.DAY_OF_MONTH, 10);
-        long maxDate = calendar.getTimeInMillis();
-
-        // 커스텀 DatePickerDialog 생성
-        CustomDatePickerDialog customDatePickerDialog = new CustomDatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String selectedDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                TextView textViewDate = getView().findViewById(R.id.textViewDate);
-                textViewDate.setText("선택된 날짜 : " + selectedDate);
-            }
-        });
-        customDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        //최대날짜 설정
-        customDatePickerDialog.getDatePicker().setMaxDate(maxDate);
-        customDatePickerDialog.show();
-    }
-
-
 
     //좌석등록
     private void setSeatButtonClickListeners(View view) {
@@ -121,7 +82,7 @@ public class HomeFragment extends Fragment {
 
                     //TODO:예약된 시간만 배열로 선언해놓음 좌석별로 분리해줘야함
                     //TODO:이런식으로 사용자에게 보이는 문자열을 반환해줘야함..
-                    String[] reservedTimes = {"8시 ~ 9시", "9시 ~ 10시", "10시 ~ 11시"};
+                    String[] reservedTimes = {"8시 ~ 9시"};
 
                     // 팝업창 띄우기
                     showTimePickerDialog(seatNumber, reservedTimes);
@@ -131,10 +92,54 @@ public class HomeFragment extends Fragment {
     }
 
     //TimePickerDialogFragment클래스에서 처리
-    private void showTimePickerDialog(String seatNumber, String[] reservedTimes) {
-        TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(seatNumber, reservedTimes);
+    private void showTimePickerDialog(String seatNum, String[] reservedTimes) {
+        TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(this, seatNum, startTime, endTime);
         dialogFragment.show(getParentFragmentManager(), "time_picker");
     }
 
 
+    //지역불러오고 그에 맞는 언어설정해주기(캘린더용)
+    private void setAppLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+    }
+
+
+    //오늘날짜로 디폴트설정
+    private void setTodayDate() {
+        // 현재 날짜를 가져오기
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        selectedDate = dateFormat.format(calendar.getTime()) + " ";
+
+        // 가져온 날짜를 TextView에 설정(이건 사용자용)
+        textViewDate.setText("선택된 날짜 : " + selectedDate);
+    }
+
+
+    // 날짜선택 다이얼로그
+    private void showDatePicker() {
+        // 현재 날짜 가져오기
+        final Calendar calendar = Calendar.getInstance();
+        //현재날짜에 10일 추가하고
+        calendar.add(Calendar.DAY_OF_MONTH, 10);
+        long maxDate = calendar.getTimeInMillis();
+
+        // 커스텀 DatePickerDialog 생성
+        CustomDatePickerDialog customDatePickerDialog = new CustomDatePickerDialog(this, requireContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                selectedDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " ";
+                TextView textViewDate = getView().findViewById(R.id.textViewDate);
+                textViewDate.setText("선택된 날짜 : " + selectedDate);
+            }
+        });
+        customDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        customDatePickerDialog.getDatePicker().setMaxDate(maxDate);
+        customDatePickerDialog.show();
+    }
 }

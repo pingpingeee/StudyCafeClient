@@ -1,41 +1,54 @@
 package com.example.mysecondproject.needHomeService;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.main.ReserveHandler;
+import com.example.mysecondproject.HomeFragment;
+import com.example.mysecondproject.IntroActivity;
 import com.example.mysecondproject.R;
+import com.example.service.ReserveService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import customfonts.MyTextView_Poppins_Medium;
 
 public class TimePickerDialogFragment extends DialogFragment {
 
-    private String seatNumber;
+    private String seatNum;
+    private String uuId;
+    private String startTime;
+    private String endTime;
+    private String day;
     private String[] reservedTimes;
-    private String selectedTime;
 
-    public TimePickerDialogFragment(String seatNumber, String[] reservedTimes) {
-        this.seatNumber = seatNumber;
-        this.reservedTimes = reservedTimes;
+    private String selectedTime;
+    private TimePickerDialogFragment timePickerDialogFragment;
+    private View view;
+    private HomeFragment homeFragment;
+
+
+    public TimePickerDialogFragment(HomeFragment homeFragment, String seatNum, String startTime, String endTime) {
+        this.homeFragment = homeFragment;
+        this.seatNum = seatNum;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @NonNull
     @Override
+    //나중에 서버랑 이용시간 연동해야함?
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_time_picker, null);
@@ -56,6 +69,7 @@ public class TimePickerDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedTime = adapter.getItem(position);
+
             }
         });
 
@@ -68,6 +82,20 @@ public class TimePickerDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 if (selectedTime != null) {
                     checkReservation(selectedTime);
+                    ReserveHandler seatTimeHandler;
+
+                    String[] h = selectedTime.split(" ~ ");
+                    String startH = h[0].replace("시", "").trim();
+                    String endH = h[1].replace("시", "").trim();
+
+                    String day = homeFragment.getSelectedDate();
+                    startTime = day + startH + ":00:00";
+                    endTime = day + endH + ":00:00";
+
+                    seatTimeHandler = new ReserveHandler(timePickerDialogFragment, v);
+                    ReserveService seatTimeService = new ReserveService(seatTimeHandler, seatNum, startTime, endTime);
+                    seatTimeService.bindNetworkModule(IntroActivity.networkModule);
+                    IntroActivity.networkThread.requestService(seatTimeService);
                     dismiss();
                 }
             }
@@ -84,34 +112,13 @@ public class TimePickerDialogFragment extends DialogFragment {
         return builder.create();
     }
 
+    //예약확인
     private void checkReservation(String selectedTime) {
-        // selectedTime에 이미 예약되어 있는지 확인로직필요
-        // 테스트예약확인
-        boolean isReserved = false;
 
-        // Ensure reservedTimes is not null before iterating
-        if (reservedTimes != null) {
-            for (String reservedTime : reservedTimes) {
-                if (reservedTime.matches(".*" + Pattern.quote(selectedTime) + ".*")) {
-                    isReserved = true;
-                    break;
-                }
-            }
-        }
-
-        if (isReserved) {
-            // 이미 예약됐을 때
-            System.out.println("실패");
-            showReservationErrorDialog();
-        } else {
-            // 예약성공
-            System.out.println("성공");
-            dismiss();
-            showConfirmationDialog(selectedTime);
-        }
     }
 
 
+    //예약실패 시 뜨는 팝업창
     private void showReservationErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
@@ -136,8 +143,9 @@ public class TimePickerDialogFragment extends DialogFragment {
         dialog.show();
     }
 
+    //예약성공 시 뜨는 팝업창
     private void showConfirmationDialog(String selectedTime) {
-        String confirmationMessage = seatNumber + "번 좌석, " + selectedTime + "에 예약이 완료되었습니다.";
+        String confirmationMessage = seatNum + "번 좌석, " + selectedTime + "에 예약이 완료되었습니다.";
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
         View dialogView = getLayoutInflater().inflate(R.layout.success_dialog, null);

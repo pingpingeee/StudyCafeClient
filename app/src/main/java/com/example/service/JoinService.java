@@ -30,9 +30,7 @@ public class JoinService implements INetworkService
     @Override
     public boolean tryExecuteService()
     {
-        System.out.println("before");
         m_netModule.writeLine("JOIN_SERVICE");
-        System.out.println("after");
         m_netModule.writeLine(m_id);
         m_netModule.writeLine(m_pw);
         m_netModule.writeLine("1");
@@ -40,12 +38,11 @@ public class JoinService implements INetworkService
         m_netModule.writeLine(NetworkLiteral.EOF);
 
         String response = m_netModule.readLine();
-        System.out.println(response);
 
         Message message = joinHandler.obtainMessage();
         Bundle bundle = new Bundle();
         bundle.putString("response", response);
-        //
+
         message.setData(bundle);
         joinHandler.sendMessage(message);
 

@@ -10,5 +10,3 @@ public class LoginModel extends Model {
         L_worker = new LoginWorker(this);
     }
 }
-
-

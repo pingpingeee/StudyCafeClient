@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 
+import com.example.mysecondproject.HomeFragment;
 import com.example.mysecondproject.R;
 
 import customfonts.MyTextView_Poppins_Medium;
@@ -23,7 +24,7 @@ public class CustomDatePickerDialog extends Dialog {
         return datePicker;
     }
 
-    public CustomDatePickerDialog(@NonNull Context context, DatePickerDialog.OnDateSetListener listener) {
+    public CustomDatePickerDialog(HomeFragment homeFragment, @NonNull Context context, DatePickerDialog.OnDateSetListener listener) {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_date_picker_dialog);

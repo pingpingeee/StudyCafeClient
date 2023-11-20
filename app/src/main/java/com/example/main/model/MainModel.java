@@ -10,5 +10,3 @@ public class MainModel extends Model {
         m_worker = new MainWorker(this);
     }
 }
-
-
