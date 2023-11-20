@@ -80,8 +80,6 @@ public class TimePickerDialogFragment extends DialogFragment {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedTime != null) {
-                    checkReservation(selectedTime);
                     ReserveHandler seatTimeHandler;
 
                     String[] h = selectedTime.split(" ~ ");
@@ -97,7 +95,6 @@ public class TimePickerDialogFragment extends DialogFragment {
                     seatTimeService.bindNetworkModule(IntroActivity.networkModule);
                     IntroActivity.networkThread.requestService(seatTimeService);
                     dismiss();
-                }
             }
         });
 
@@ -112,10 +109,7 @@ public class TimePickerDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    //예약확인
-    private void checkReservation(String selectedTime) {
 
-    }
 
 
     //예약실패 시 뜨는 팝업창
