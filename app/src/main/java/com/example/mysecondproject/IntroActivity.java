@@ -31,12 +31,12 @@ public class IntroActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        },10);  //1000으로 변경
+        },1000);  //1000으로 변경
     }
     @Override
     protected void onPause() {
