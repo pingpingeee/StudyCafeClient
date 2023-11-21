@@ -15,7 +15,6 @@ public class ReserveService extends Service implements INetworkService {
     ReserveHandler seatTimeHandler;
     private INetworkModule m_netModule;
     private String seatNum;
-    private String uuId;
     private String startTime;
     private String endTime;
 

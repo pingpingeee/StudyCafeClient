@@ -1,4 +1,4 @@
-package com.example.mysecondproject.needHomeService;
+package com.example.mysecondproject.need_home_service;
 
 import android.annotation.TargetApi;
 import android.content.Context;

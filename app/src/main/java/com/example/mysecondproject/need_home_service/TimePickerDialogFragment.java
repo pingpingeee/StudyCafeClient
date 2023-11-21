@@ -1,4 +1,4 @@
-package com.example.mysecondproject.needHomeService;
+package com.example.mysecondproject.need_home_service;
 
 import android.app.Dialog;
 import android.os.Bundle;

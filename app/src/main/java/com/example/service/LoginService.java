@@ -46,6 +46,7 @@ public class LoginService implements INetworkService
 
         if(response.equals("<SUCCESS>")){
             CustomerManager.getManager().setUuid(Integer.parseInt(m_netModule.readLine()));
+            CustomerManager.getManager().setNickname(m_netModule.readLine());
         }
 
         message.setData(bundle);

@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.mysecondproject.needHomeService.TimePickerDialogFragment;
+import com.example.mysecondproject.need_home_service.TimePickerDialogFragment;
 
 public class ReserveHandler extends Handler {
     View view;
@@ -26,14 +26,12 @@ public class ReserveHandler extends Handler {
 
         if (response.equals("<SUCCESS>")) {
             System.out.println("통신성공");
-            System.out.println("test1"+response);
-        } else if (response.equals("<FAILURE")) {
+        } else if (response.equals("<FAILURE>")) {
             System.out.println("N == 0");
         } else if (response.equals("<ERROR>")) {
             System.out.println("에러");
         }else{
             System.out.println("그외처리");
-            System.out.println("qq"+response);
         }
     }
 }

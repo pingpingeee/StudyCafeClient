@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <!-- 여기에 다이얼로그에 들어갈 내용을 추가하세요 -->
-    <com.example.mysecondproject.needHomeService.KoreanDatePicker
+    <com.example.mysecondproject.need_home_service.KoreanDatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

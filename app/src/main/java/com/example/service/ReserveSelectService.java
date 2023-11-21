@@ -11,22 +11,17 @@ import com.example.network.INetworkModule;
 import com.example.network.INetworkService;
 import com.example.network.NetworkLiteral;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 
 public class ReserveSelectService extends Service implements INetworkService {
     ReserveSelectHandler reserveSelectHandler;
     private INetworkModule m_netModule;
-    private String uuId;
-    private String num;
-    private String seatNum;
-    private String startTime;
-    private String endTime;
-    private String day;
 
-    public ReserveSelectService(ReserveSelectHandler reserveSelectHandler, String uuId) {
+
+    public ReserveSelectService(ReserveSelectHandler reserveSelectHandler) {
         this.reserveSelectHandler = reserveSelectHandler;
-        this.uuId = uuId;
     }
 
     @Override
@@ -41,13 +36,21 @@ public class ReserveSelectService extends Service implements INetworkService {
         m_netModule.writeLine(Integer.toString(CustomerManager.getManager().getUuid()));
         m_netModule.writeLine(NetworkLiteral.EOF);
 
+        Vector<String> lines = new Vector<String>();
+
+        while (true) {
+            String line = m_netModule.readLine();
+            if (line.equals(NetworkLiteral.EOF)) break;
+            lines.add(line);
+        }
+
+
         String response = m_netModule.readLine();
 
         Message message = reserveSelectHandler.obtainMessage();
         Bundle bundle = new Bundle();
+        bundle.putStringArrayList("lines", new ArrayList<>(lines));
         bundle.putString("response", response);
-
-        //Vector<String> lines = new Vector<String>();
 
         message.setData(bundle);
         reserveSelectHandler.sendMessage(message);

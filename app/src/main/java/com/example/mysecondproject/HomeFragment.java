@@ -14,13 +14,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.mysecondproject.needHomeService.CustomDatePickerDialog;
-import com.example.mysecondproject.needHomeService.TimePickerDialogFragment;
+import com.example.mysecondproject.need_home_service.CustomDatePickerDialog;
+import com.example.mysecondproject.need_home_service.TimePickerDialogFragment;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import customfonts.MyTextView_Poppins_Medium;
 
@@ -80,19 +78,15 @@ public class HomeFragment extends Fragment {
                     // 좌석 버튼이 클릭되었을 때 해당 번호를 가져와서 팝업창을 띄움
                     String seatNumber = ((TextView) v).getText().toString();
 
-                    //TODO:예약된 시간만 배열로 선언해놓음 좌석별로 분리해줘야함
-                    //TODO:이런식으로 사용자에게 보이는 문자열을 반환해줘야함..
-                    String[] reservedTimes = {"8시 ~ 9시"};
-
                     // 팝업창 띄우기
-                    showTimePickerDialog(seatNumber, reservedTimes);
+                    showTimePickerDialog(seatNumber);
                 }
             });
         }
     }
 
     //TimePickerDialogFragment클래스에서 처리
-    private void showTimePickerDialog(String seatNum, String[] reservedTimes) {
+    private void showTimePickerDialog(String seatNum) {
         TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(this, seatNum, startTime, endTime);
         dialogFragment.show(getParentFragmentManager(), "time_picker");
     }
