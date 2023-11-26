@@ -25,7 +25,7 @@ public class ReserveHandler extends Handler {
         String response = bundle.getString("response");
 
         if (response.equals("<SUCCESS>")) {
-            System.out.println("통신성공");
+            System.out.println("좌석예약성공");
         } else if (response.equals("<FAILURE>")) {
             System.out.println("N == 0");
         } else if (response.equals("<ERROR>")) {

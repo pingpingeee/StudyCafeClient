@@ -3,10 +3,7 @@ package com.example.service;
 import android.os.Bundle;
 import android.os.Message;
 
-import com.example.main.ReserveHandler;
-import com.example.main.ReserveSelectHandler;
-import com.example.main.Service;
-import com.example.mysecondproject.CustomerManager;
+import com.example.main.TimetableSelectHandler;
 import com.example.network.INetworkModule;
 import com.example.network.INetworkService;
 import com.example.network.NetworkLiteral;
@@ -14,21 +11,20 @@ import com.example.network.NetworkLiteral;
 import java.util.ArrayList;
 import java.util.Vector;
 
-
-public class ReserveSelectService extends Service implements INetworkService {
-    ReserveSelectHandler reserveSelectHandler;
+public class TimetableSelectService implements INetworkService {
     private INetworkModule m_netModule;
+    TimetableSelectHandler timetableSelectHandler;
 
-
-    public ReserveSelectService(ReserveSelectHandler reserveSelectHandler) {
-        this.reserveSelectHandler = reserveSelectHandler;
+    public TimetableSelectService(TimetableSelectHandler timetableSelectHandler) {
+        this.timetableSelectHandler = timetableSelectHandler;
     }
 
     @Override
     public boolean tryExecuteService() {
-        m_netModule.writeLine("RESERVE_SELECT_SERVICE");
-        m_netModule.writeLine(Integer.toString(CustomerManager.getManager().getUuid()));
+
+        m_netModule.writeLine("TIMETABLE_SELECT_SERVICE");
         m_netModule.writeLine(NetworkLiteral.EOF);
+
 
         Vector<String> lines = new Vector<String>();
 
@@ -41,13 +37,17 @@ public class ReserveSelectService extends Service implements INetworkService {
 
         String response = m_netModule.readLine();
 
-        Message message = reserveSelectHandler.obtainMessage();
+
+        Message message = timetableSelectHandler.obtainMessage();
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("lines", new ArrayList<>(lines));
         bundle.putString("response", response);
 
+
+
         message.setData(bundle);
-        reserveSelectHandler.sendMessage(message);
+        timetableSelectHandler.sendMessage(message);
+
         return true;
     }
 
@@ -56,4 +56,5 @@ public class ReserveSelectService extends Service implements INetworkService {
     {
         m_netModule = _netModule;
     }
+
 }

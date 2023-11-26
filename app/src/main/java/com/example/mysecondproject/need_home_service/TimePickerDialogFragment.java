@@ -14,13 +14,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.main.ReserveHandler;
+import com.example.main.SeatSelectHandler;
+import com.example.main.TimetableSelectHandler;
 import com.example.mysecondproject.HomeFragment;
 import com.example.mysecondproject.IntroActivity;
 import com.example.mysecondproject.R;
 import com.example.service.ReserveService;
+import com.example.service.SeatSelectService;
+import com.example.service.TimetableSelectService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import customfonts.MyTextView_Poppins_Medium;
 
@@ -31,67 +39,108 @@ public class TimePickerDialogFragment extends DialogFragment {
     private String endTime;
 
     private String selectedTime;
+    private String selectedDay;
+    private int usingOnair;
+    private int startOnair;
+    private int endOnair;
     private TimePickerDialogFragment timePickerDialogFragment;
     private HomeFragment homeFragment;
     private ShowSeatFragment showSeat;
+    private ArrayList<String> lines = new ArrayList<>();
+    private ArrayList<String> onair = new ArrayList<>();
+    List<String> timeList = new ArrayList<>();
+    private View view;
+    ListView timeListView;
 
 
-    public TimePickerDialogFragment(ShowSeatFragment showSeat, String seatNum, String startTime, String endTime) {
+    public void setSelectedDay(String selectedDay) {
+        this.selectedDay = selectedDay;
+    }
+
+    public TimePickerDialogFragment(ShowSeatFragment showSeat, String seatNum, String startTime, String endTime, String selectedDay) {
         this.showSeat = showSeat;
         this.seatNum = seatNum;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.selectedDay = selectedDay;
     }
 
     @NonNull
     @Override
     //나중에 서버랑 이용시간 연동해야함
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_time_picker, null);
 
-        ListView timeListView = view.findViewById(R.id.timeListView);
-
-        //몇시부터 몇시까지 할지 설정
-        List<String> timeList = new ArrayList<>();
-        for (int hour = 8; hour <= 22; hour++) {
-            timeList.add(hour + "시 ~ " + (hour+1)+"시");
+        switch (selectedDay) {
+            case "월":
+                usingOnair = 0;
+                break;
+            case "화":
+                usingOnair = 1;
+                break;
+            case "수":
+                usingOnair = 2;
+                break;
+            case "목":
+                usingOnair = 3;
+                break;
+            case "금":
+                usingOnair = 4;
+                break;
+            case "토":
+                usingOnair = 5;
+                break;
+            case "일":
+                usingOnair = 6;
+                break;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_single_choice, timeList);
-        timeListView.setAdapter(adapter);
-        timeListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        view = inflater.inflate(R.layout.dialog_time_picker, null);
 
-        timeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedTime = adapter.getItem(position);
+        timeListView = view.findViewById(R.id.timeListView);
 
-            }
-        });
+        TimetableSelectHandler timetableSelectHandler;
+        timetableSelectHandler = new TimetableSelectHandler(this);
+        TimetableSelectService timetableSelectService = new TimetableSelectService(timetableSelectHandler);
+        timetableSelectService.bindNetworkModule(IntroActivity.networkModule);
+        IntroActivity.networkThread.requestService(timetableSelectService);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.TimePickerDialogTheme);
-        builder.setTitle("시간 선택")
+        builder.setTitle(seatNum + "번 좌석 시간 선택")
                 .setView(view);
         View btnOk = view.findViewById(R.id.btnOk);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    ReserveHandler seatTimeHandler;
+                ReserveHandler seatTimeHandler;
+                String[] h = selectedTime.split(" ~ ");
+                String startH = h[0].replace("시", "").trim();
+                String endH = h[1].replace("시", "").trim();
+                String day = showSeat.getSelectedDate();
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                try {
+                    Date startDate = inputFormat.parse(day + " " + startH + ":00:00");
+                    Date endDate = inputFormat.parse(day + " " + endH + ":00:00");
+                        startTime = outputFormat.format(startDate);
+                        endTime = outputFormat.format(endDate);
+                } catch (ParseException e) {
+                        e.printStackTrace();
+                }
 
-                    String[] h = selectedTime.split(" ~ ");
-                    String startH = h[0].replace("시", "").trim();
-                    String endH = h[1].replace("시", "").trim();
-
-                    String day = showSeat.getSelectedDate();
-                    startTime = day + startH + ":00:00";
-                    endTime = day + endH + ":00:00";
-
-                    seatTimeHandler = new ReserveHandler(timePickerDialogFragment, v);
-                    ReserveService seatTimeService = new ReserveService(seatTimeHandler, seatNum, startTime, endTime);
-                    seatTimeService.bindNetworkModule(IntroActivity.networkModule);
-                    IntroActivity.networkThread.requestService(seatTimeService);
-                    dismiss();
+                for (int i = 0; i < lines.size(); i += 2) {
+                    if (startTime.equals(lines.get(i))) {
+                        showReservationErrorDialog();
+                        return;
+                    }
+                }
+                seatTimeHandler = new ReserveHandler(timePickerDialogFragment, v);
+                ReserveService seatTimeService = new ReserveService(seatTimeHandler, seatNum, startTime, endTime);
+                seatTimeService.bindNetworkModule(IntroActivity.networkModule);
+                IntroActivity.networkThread.requestService(seatTimeService);
+                showConfirmationDialog(selectedTime);
+                dismiss();
             }
         });
 
@@ -108,6 +157,34 @@ public class TimePickerDialogFragment extends DialogFragment {
 
 
 
+    public void update() {
+
+        int j = 0;
+        for (int i = 0; i < onair.size(); i += 2) {
+            if (usingOnair == j) {
+                startOnair = Integer.parseInt(onair.get(i));
+                endOnair = Integer.parseInt(onair.get(i + 1));
+            }
+            j++;
+        }
+
+
+        for (int hour = startOnair; hour <= endOnair - 1; hour++) {
+            timeList.add(hour + "시 ~ " + (hour+1)+"시");
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_single_choice, timeList);
+        timeListView.setAdapter(adapter);
+        timeListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        timeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedTime = adapter.getItem(position);
+
+            }
+        });
+    }
 
     //예약실패 시 뜨는 팝업창
     private void showReservationErrorDialog() {
@@ -164,6 +241,11 @@ public class TimePickerDialogFragment extends DialogFragment {
 
 
     }
-
+    public void setLines(ArrayList<String> lines) {
+        this.lines = lines;
+    }
+    public void setOnair(ArrayList<String> onair) {
+        this.onair = onair;
+    }
 
 }

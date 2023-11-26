@@ -1,6 +1,7 @@
 package com.example.mysecondproject.need_home_service;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,11 +17,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 
+import com.example.main.ReservableWeekdaySelectHandler;
 import com.example.main.SeatSelectHandler;
 import com.example.mysecondproject.HomeFragment;
 
 import com.example.mysecondproject.IntroActivity;
 import com.example.mysecondproject.R;
+import com.example.service.ReservableWeekdaySelectService;
 import com.example.service.SeatSelectService;
 
 import org.w3c.dom.Text;
@@ -31,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import customfonts.MyTextView_Poppins_Medium;
 
 
 public class ShowSeatFragment extends DialogFragment {
@@ -44,12 +49,15 @@ public class ShowSeatFragment extends DialogFragment {
     private String selectedDate;
     private ArrayList<String> lines = new ArrayList<>();
     private View view;
-    public ShowSeatFragment(HomeFragment homeFragment, String seatNum, String startTime, String endTime, String selectedDate) {
+    private String usingForTimePickerday;
+    private String serviceEnable;
+    public ShowSeatFragment(HomeFragment homeFragment, String seatNum, String startTime, String endTime, String selectedDate, String usingForTimePickerday) {
         this.homeFragment = homeFragment;
         this.seatNum = seatNum;
         this.startTime = startTime;
         this.endTime = endTime;
         this.selectedDate = selectedDate;
+        this.usingForTimePickerday = usingForTimePickerday;
     }
 
 
@@ -62,20 +70,29 @@ public class ShowSeatFragment extends DialogFragment {
         seatSelectService.bindNetworkModule(IntroActivity.networkModule);
         IntroActivity.networkThread.requestService(seatSelectService);
 
+        ReservableWeekdaySelectHandler reservableWeekdaySelectHandler;
+        reservableWeekdaySelectHandler = new ReservableWeekdaySelectHandler(this);
+
+
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.seat_select_first, null);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.TimePickerDialogTheme);
-        builder.setTitle("예약정보")
+        builder.setTitle(seatNum + "번 좌석 예약정보")
                 .setView(view);
         View btnOk = view.findViewById(R.id.btnOk);
+
+
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(seatNum);
-                dismiss();
+                ReservableWeekdaySelectService reservableWeekdaySelectService =
+                        new ReservableWeekdaySelectService(reservableWeekdaySelectHandler, selectedDate);
+                reservableWeekdaySelectService.bindNetworkModule(IntroActivity.networkModule);
+                IntroActivity.networkThread.requestService(reservableWeekdaySelectService);
 
+                dismiss();
             }
         });
 
@@ -93,6 +110,12 @@ public class ShowSeatFragment extends DialogFragment {
         TextView text = view.findViewById(R.id.text);
         text.setText("등록된 예약내역이 없습니다.");
     }
+
+    public void noneRecords1() {
+        TextView text = view.findViewById(R.id.text);
+        text.setTextColor(Color.RED);
+        text.setText("영업일이 아닙니다.");
+    }
     public void updateRecords(ArrayList<String> lines) {
         lines = this.lines;
         LinearLayout containerLayout = view.findViewById(R.id.recordsContainer1);
@@ -105,12 +128,10 @@ public class ShowSeatFragment extends DialogFragment {
             String endTime = lines.get(i + 1);
 
             try {
-                // Parse the start and end date strings
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 Date startDate = sdf.parse(startTime);
                 Date endDate = sdf.parse(endTime);
 
-                // Extract year, month, day, start hour, and end hour
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(startDate);
 
@@ -122,22 +143,43 @@ public class ShowSeatFragment extends DialogFragment {
                 calendar.setTime(endDate);
                 String endHour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
 
-                // Combine the extracted values
                 String combinedText = String.format("%s년 %s월 %s일 %s시 ~ %s시", year, month, day, startHour, endHour);
 
                 text1.setText(combinedText);
-                System.out.println(combinedText);
 
                 containerLayout.addView(recordView);
             } catch (ParseException e) {
-                e.printStackTrace();
-                // Handle the exception or log an error if parsing fails
+                //e.printStackTrace();
             }
         }
     }
-    private void showTimePickerDialog(String seatNum) {
-        TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(this, seatNum, startTime, endTime);
+    public void showTimePickerDialog(String seatNum) {
+        TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(this, seatNum, startTime, endTime, usingForTimePickerday);
         dialogFragment.show(getParentFragmentManager(), "time_picker");
+        dialogFragment.setLines(lines);
+    }
+    public void updateFail() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+        builder.setView(dialogView);
+
+        customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
+        MyTextView_Poppins_Medium confirmButton = dialogView.findViewById(R.id.confirm_button);
+
+        dialogTitle.setText("영업일이 아닙니다.");
+        confirmButton.setText("확인");
+
+        AlertDialog dialog = builder.create();
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     public void setLines(ArrayList<String> lines) {
         this.lines = lines;
@@ -145,5 +187,9 @@ public class ShowSeatFragment extends DialogFragment {
 
     public String getSelectedDate() {
         return selectedDate;
+    }
+
+    public String getSeatNum() {
+        return seatNum;
     }
 }

@@ -11,7 +11,7 @@ import com.example.network.INetworkService;
 import com.example.network.NetworkLiteral;
 
 
-public class ReserveService extends Service implements INetworkService {
+public class ReserveService implements INetworkService {
     ReserveHandler seatTimeHandler;
     private INetworkModule m_netModule;
     private String seatNum;

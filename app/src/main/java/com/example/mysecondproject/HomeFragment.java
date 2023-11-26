@@ -14,9 +14,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.main.ReservableWeekdaySelectHandler;
 import com.example.main.SeatSelectHandler;
 import com.example.mysecondproject.need_home_service.CustomDatePickerDialog;
 import com.example.mysecondproject.need_home_service.ShowSeatFragment;
+import com.example.service.ReservableWeekdaySelectService;
 import com.example.service.SeatSelectService;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +34,8 @@ public class HomeFragment extends Fragment {
     private String startTime;
     private String endTime;
     private String selectedDate;
+    private String dayOfWeekString;
+    private CustomDatePickerDialog customDatePickerDialog;
 
 
     @Override
@@ -85,7 +89,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showSeat(String seatNum){
-        ShowSeatFragment showSeat = new ShowSeatFragment(this, seatNum, startTime, endTime, selectedDate);
+        ShowSeatFragment showSeat = new ShowSeatFragment(this, seatNum, startTime, endTime, selectedDate, dayOfWeekString);
         showSeat.show(getParentFragmentManager(), "show_seat");
     }
 
@@ -101,37 +105,62 @@ public class HomeFragment extends Fragment {
     }
 
 
+    public TextView getTextViewDate() {
+        return textViewDate;
+    }
+
     //오늘날짜로 디폴트설정
-    private void setTodayDate() {
+    public void setTodayDate() {
         // 현재 날짜를 가져오기
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         selectedDate = dateFormat.format(calendar.getTime()) + " ";
 
-        // 가져온 날짜를 TextView에 설정(이건 사용자용)
-        textViewDate.setText("선택된 날짜 : " + selectedDate);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        dayOfWeekString = getDayOfWeekString(dayOfWeek);
+
+        textViewDate.setText("선택된 날짜 : " + selectedDate + "(" + dayOfWeekString + ")");;
     }
 
 
     // 날짜선택 다이얼로그
     private void showDatePicker() {
-        // 현재 날짜 가져오기
         final Calendar calendar = Calendar.getInstance();
-        //현재날짜에 10일 추가하고
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         long maxDate = calendar.getTimeInMillis();
-
-        // 커스텀 DatePickerDialog 생성
-        CustomDatePickerDialog customDatePickerDialog = new CustomDatePickerDialog(this, requireContext(), new DatePickerDialog.OnDateSetListener() {
+        customDatePickerDialog = new CustomDatePickerDialog(this,
+                requireContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 selectedDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " ";
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                dayOfWeekString = getDayOfWeekString(dayOfWeek);
+
                 TextView textViewDate = getView().findViewById(R.id.textViewDate);
-                textViewDate.setText("선택된 날짜 : " + selectedDate);
+                textViewDate.setText("선택된 날짜 : " + selectedDate + "(" + dayOfWeekString + ")");
+                customDatePickerDialog.setSelectedDate(selectedDate);
             }
         });
+
         customDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         customDatePickerDialog.getDatePicker().setMaxDate(maxDate);
         customDatePickerDialog.show();
+    }
+
+    public String getDayOfWeekString(int dayOfWeek) {
+        String[] daysOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
+        return daysOfWeek[dayOfWeek - 1];
+    }
+
+    public void setSelectedDate(String selectedDate) {
+        this.selectedDate = selectedDate;
+    }
+
+    public void setDayOfWeekString(String dayOfWeekString) {
+        this.dayOfWeekString = dayOfWeekString;
     }
 }

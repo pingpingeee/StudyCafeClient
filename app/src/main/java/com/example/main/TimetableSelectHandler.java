@@ -3,23 +3,20 @@ package com.example.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.mysecondproject.need_home_service.ShowSeatFragment;
 import com.example.mysecondproject.need_home_service.TimePickerDialogFragment;
 
 import java.util.ArrayList;
 
-public class SeatSelectHandler extends Handler {
-    ShowSeatFragment showSeatFragment;
+public class TimetableSelectHandler extends Handler {
+    TimePickerDialogFragment timePickerDialogFragment;
 
-    public SeatSelectHandler(ShowSeatFragment showSeatFragment) {
+    public TimetableSelectHandler(TimePickerDialogFragment timePickerDialogFragment) {
         super();
-        this.showSeatFragment = showSeatFragment;
+        this.timePickerDialogFragment = timePickerDialogFragment;
     }
-
 
     @Override
     public void handleMessage(@NonNull Message message) {
@@ -28,20 +25,19 @@ public class SeatSelectHandler extends Handler {
         String response = bundle.getString("response");
 
 
-        ArrayList<String> lines = bundle.getStringArrayList("lines");
+        ArrayList<String> onair = bundle.getStringArrayList("lines");
+
 
         if (response.equals("<SUCCESS>")) {
-            System.out.println("좌석 예약내역 통신성공");
-            showSeatFragment.setLines(lines);
-            showSeatFragment.updateRecords(lines);
+            System.out.println("통신성공");
+            timePickerDialogFragment.setOnair(onair);
+            timePickerDialogFragment.update();
         } else if (response.equals("<FAILURE>")) {
-            System.out.println("좌석 예약내역 없음");
-            showSeatFragment.noneRecords();
+            System.out.println("없음");
         } else if (response.equals("<ERROR>")) {
             System.out.println("에러");
         } else {
             System.out.println("그 외 처리");
         }
     }
-
 }
