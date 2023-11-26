@@ -16,11 +16,14 @@ import java.util.ArrayList;
 
 public class SettingFragment extends Fragment {
     private ArrayList<String> lines = new ArrayList<>();
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        view = inflater.inflate(R.layout.fragment_setting, container, false);
+
+
         ReserveSelectHandler reserveSelectHandler;
         reserveSelectHandler = new ReserveSelectHandler(this);
         ReserveSelectService reserveSelectService =
@@ -29,6 +32,11 @@ public class SettingFragment extends Fragment {
         IntroActivity.networkThread.requestService(reserveSelectService);
 
         return view;
+    }
+
+    public void noneRecords() {
+        TextView text = view.findViewById(R.id.text);
+        text.setText("등록된 예약내역이 없습니다.");
     }
     public void updateRecords(ArrayList<String> lines) {
         lines = this.lines;

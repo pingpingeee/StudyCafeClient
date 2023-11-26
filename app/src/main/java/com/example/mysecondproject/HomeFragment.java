@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.main.SeatSelectHandler;
 import com.example.mysecondproject.need_home_service.CustomDatePickerDialog;
-import com.example.mysecondproject.need_home_service.TimePickerDialogFragment;
+import com.example.mysecondproject.need_home_service.ShowSeatFragment;
+import com.example.service.SeatSelectService;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -31,9 +33,6 @@ public class HomeFragment extends Fragment {
     private String endTime;
     private String selectedDate;
 
-    public String getSelectedDate() {
-        return selectedDate;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,16 +78,15 @@ public class HomeFragment extends Fragment {
                     String seatNumber = ((TextView) v).getText().toString();
 
                     // 팝업창 띄우기
-                    showTimePickerDialog(seatNumber);
+                    showSeat(seatNumber);
                 }
             });
         }
     }
 
-    //TimePickerDialogFragment클래스에서 처리
-    private void showTimePickerDialog(String seatNum) {
-        TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment(this, seatNum, startTime, endTime);
-        dialogFragment.show(getParentFragmentManager(), "time_picker");
+    private void showSeat(String seatNum){
+        ShowSeatFragment showSeat = new ShowSeatFragment(this, seatNum, startTime, endTime, selectedDate);
+        showSeat.show(getParentFragmentManager(), "show_seat");
     }
 
 

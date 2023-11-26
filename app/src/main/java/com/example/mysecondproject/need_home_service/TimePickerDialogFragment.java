@@ -27,20 +27,17 @@ import customfonts.MyTextView_Poppins_Medium;
 public class TimePickerDialogFragment extends DialogFragment {
 
     private String seatNum;
-    private String uuId;
     private String startTime;
     private String endTime;
-    private String day;
-    private String[] reservedTimes;
 
     private String selectedTime;
     private TimePickerDialogFragment timePickerDialogFragment;
-    private View view;
     private HomeFragment homeFragment;
+    private ShowSeatFragment showSeat;
 
 
-    public TimePickerDialogFragment(HomeFragment homeFragment, String seatNum, String startTime, String endTime) {
-        this.homeFragment = homeFragment;
+    public TimePickerDialogFragment(ShowSeatFragment showSeat, String seatNum, String startTime, String endTime) {
+        this.showSeat = showSeat;
         this.seatNum = seatNum;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -48,7 +45,7 @@ public class TimePickerDialogFragment extends DialogFragment {
 
     @NonNull
     @Override
-    //나중에 서버랑 이용시간 연동해야함?
+    //나중에 서버랑 이용시간 연동해야함
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_time_picker, null);
@@ -86,7 +83,7 @@ public class TimePickerDialogFragment extends DialogFragment {
                     String startH = h[0].replace("시", "").trim();
                     String endH = h[1].replace("시", "").trim();
 
-                    String day = homeFragment.getSelectedDate();
+                    String day = showSeat.getSelectedDate();
                     startTime = day + startH + ":00:00";
                     endTime = day + endH + ":00:00";
 

@@ -7,17 +7,16 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.mysecondproject.SettingFragment;
+import com.example.mysecondproject.need_home_service.ShowSeatFragment;
 
 import java.util.ArrayList;
 
+public class SeatSelectHandler extends Handler {
+    ShowSeatFragment showSeatFragment;
 
-public class ReserveSelectHandler extends Handler {
-    SettingFragment settingFragment;
-
-    public ReserveSelectHandler(SettingFragment settingFragment) {
+    public SeatSelectHandler(ShowSeatFragment showSeatFragment) {
         super();
-        this.settingFragment = settingFragment;
+        this.showSeatFragment = showSeatFragment;
     }
 
     @Override
@@ -30,12 +29,12 @@ public class ReserveSelectHandler extends Handler {
         ArrayList<String> lines = bundle.getStringArrayList("lines");
 
         if (response.equals("<SUCCESS>")) {
-            System.out.println("유저 개인내역 통신성공");
-            settingFragment.setLines(lines);
-            settingFragment.updateRecords(lines);
+            System.out.println("좌석 예약내역 통신성공");
+            showSeatFragment.setLines(lines);
+            showSeatFragment.updateRecords(lines);
         } else if (response.equals("<FAILURE>")) {
-            System.out.println("유저 개인내역 없음");
-            settingFragment.noneRecords();
+            System.out.println("좌석 예약내역 없음");
+            showSeatFragment.noneRecords();
         } else if (response.equals("<ERROR>")) {
             System.out.println("에러");
         } else {

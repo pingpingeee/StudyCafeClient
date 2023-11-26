@@ -64,7 +64,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
         </LinearLayout>
+
     </ScrollView>
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:padding="16dp"/>
 </RelativeLayout>
