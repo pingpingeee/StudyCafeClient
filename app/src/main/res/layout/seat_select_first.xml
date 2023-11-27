@@ -18,6 +18,7 @@
 
         </LinearLayout>
     </ScrollView>
+
     <TextView
         android:id="@+id/text"
         android:layout_width="280dp"
@@ -27,7 +28,6 @@
         android:layout_marginTop="-200dp"
         android:layout_marginBottom="140dp"
         android:layout_gravity="center"
-
         android:layout_centerInParent="true"
         android:padding="16dp"/>
     <LinearLayout

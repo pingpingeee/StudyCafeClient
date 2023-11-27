@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:divider="@android:color/darker_gray"
     android:dividerHeight="1dp"
-    tools:context=".MainActivity">
+    tools:context="study.customer.main.MainActivity">
 
 
 

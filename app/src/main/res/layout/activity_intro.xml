@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        android:text="StudyCafe"
-        android:layout_marginTop="-20dp"
+        android:text="심플체크"
+        android:layout_marginTop="-25dp"
         android:textColor="@color/blue"/>
 
 </LinearLayout>

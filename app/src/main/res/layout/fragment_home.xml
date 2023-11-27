@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".HomeFragment"
+    tools:context="study.customer.gui.HomeFragment"
     android:overScrollMode="never">
 
     <LinearLayout
@@ -41,6 +41,20 @@
             android:layout_gravity="center"
             android:padding="16dp"/>
 
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="날짜들어올 텍스트박스"/>
+
+        <TextView
+            android:id="@+id/textOnair"
+            android:textColor="#FF0000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="경고문"/>
 
 
 
@@ -282,11 +296,5 @@
             android:textColor="#ffffff"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:text="날짜들어올 텍스트박스"/>
     </LinearLayout>
 </LinearLayout>
