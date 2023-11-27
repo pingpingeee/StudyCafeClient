@@ -16,5 +16,5 @@
 - study.customer.gui : 뷰
 - study.customer.in : 서버통신에 필요
 - study.customer.main : 이용자측 관련코드
-- - study.customer.handler : 핸들러 서비스와 통신
+- study.customer.handler : 핸들러 서비스와 통신
 - study.cutomer.service : 서비스 핸들러와 통신
