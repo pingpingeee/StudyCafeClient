@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 
 public class ReserveSelectHandler extends Handler {
-    ReservationFragment settingFragment;
+    ReservationFragment reservationFragment;
 
-    public ReserveSelectHandler(ReservationFragment settingFragment) {
+    public ReserveSelectHandler(ReservationFragment reservationFragment) {
         super();
-        this.settingFragment = settingFragment;
+        this.reservationFragment = reservationFragment;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class ReserveSelectHandler extends Handler {
 
         if (response.equals("<SUCCESS>")) {
             System.out.println("유저 개인내역 통신성공");
-            settingFragment.setLines(lines);
-            settingFragment.updateRecords(lines);
+            reservationFragment.setLines(lines);
+            reservationFragment.updateRecords(lines);
         } else if (response.equals("<FAILURE>")) {
             System.out.println("유저 개인내역 없음");
-            settingFragment.noneRecords();
+            reservationFragment.noneRecords();
         } else if (response.equals("<ERROR>")) {
             System.out.println("에러");
         } else {

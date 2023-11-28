@@ -1,6 +1,5 @@
 package study.customer.service;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 
@@ -20,32 +19,21 @@ public class ReservableWeekdaySelectService implements INetworkService {
 
     @Override
     public boolean tryExecuteService() {
-        new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                // Background thread: Perform network operations
-                m_netModule.writeLine("RESERVABLE_WEEKDAY_SELECT_SERVICE");
-                m_netModule.writeLine(day);
+        m_netModule.writeLine("RESERVABLE_WEEKDAY_SELECT_SERVICE");
+        m_netModule.writeLine(day);
 
-                String serviceEnable = m_netModule.readLine();
-                String response = m_netModule.readLine();
 
-                // Send the result to the UI thread
-                sendToUIThread(response, serviceEnable);
+        String serviceEnable = m_netModule.readLine();
+        String response = m_netModule.readLine();
 
-                return true;
-            }
+        Message message = reservableWeekdaySelectHandler.obtainMessage();
+        Bundle bundle = new Bundle();
+        bundle.putString("response", response);
+        bundle.putString("serviceEnable", serviceEnable);
+        bundle.putString("day", day);
 
-            private void sendToUIThread(String response, String serviceEnable) {
-                // UI thread: Update UI with the result
-                Message message = reservableWeekdaySelectHandler.obtainMessage();
-                Bundle bundle = new Bundle();
-                bundle.putString("response", response);
-                bundle.putString("serviceEnable", serviceEnable);
-                message.setData(bundle);
-                reservableWeekdaySelectHandler.sendMessage(message);
-            }
-        }.execute();
+        message.setData(bundle);
+        reservableWeekdaySelectHandler.sendMessage(message);
 
         return true;
     }

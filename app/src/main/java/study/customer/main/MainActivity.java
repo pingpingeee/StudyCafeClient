@@ -12,12 +12,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import study.customer.gui.HomeFragment;
 import study.customer.gui.InfoFragment;
-import study.customer.gui.SettingFragment;
+import study.customer.gui.ReservationFragment;
 
 public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     InfoFragment infoFragment;
-    SettingFragment settingFragment;
+    ReservationFragment reservationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         homeFragment = new HomeFragment();
         infoFragment = new InfoFragment();
-        settingFragment = new SettingFragment();
+        reservationFragment   = new ReservationFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
                     return true;
                 } else if (item.getItemId() == R.id.setting) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.containers, reservationFragment).commit();
                     return true;
                 } else if (item.getItemId() == R.id.info) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.containers, infoFragment).commit();

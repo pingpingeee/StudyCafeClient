@@ -113,6 +113,8 @@ public class CustomDatePickerDialog extends Dialog {
         homeFragment.setDayOfWeekString(dayOfWeekString);
         textViewDate.setText("선택된 날짜 : " + selectedDate + "(" + dayOfWeekString + ")");
     }
+
+
     public void onRecords() {
         TextView textView = homeFragment.getView().findViewById(R.id.textOnair);
         textView.setText("");

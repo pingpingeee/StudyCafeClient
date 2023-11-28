@@ -29,6 +29,7 @@ public class ReserveSelectService extends Service implements INetworkService {
         m_netModule.writeLine(Integer.toString(CustomerManager.getManager().getUuid()));
         m_netModule.writeLine(NetworkLiteral.EOF);
 
+
         Vector<String> lines = new Vector<String>();
 
         while (true) {

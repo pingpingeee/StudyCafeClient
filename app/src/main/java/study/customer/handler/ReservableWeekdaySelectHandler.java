@@ -35,7 +35,12 @@ public class ReservableWeekdaySelectHandler extends Handler {
         super.handleMessage(message);
         Bundle bundle = message.getData();
         String response = bundle.getString("response");
+        //영업여부
         String serviceEnable = bundle.getString("serviceEnable");
+        //선택한날짜
+        String day = bundle.getString("day");
+
+
 
 
         if (response.equals("<SUCCESS>")) {
@@ -47,13 +52,17 @@ public class ReservableWeekdaySelectHandler extends Handler {
                     customDatePickerDialog.updateFail();
                     //선택된날짜 텍스트 당일로 변경
                     customDatePickerDialog.setToday();
+
+
                     //홈화면 경고문변경
-                    customDatePickerDialog.noneRecords();
+                    //로직 너무 꼬여서 경고문변경 보류
+                    //customDatePickerDialog.noneRecords();
+
                 }
                 //홈화면 연결됐을때
                 else if (homeFragment != null) {
                     //홈화면 경고문
-                    homeFragment.noneRecords();
+                    //homeFragment.noneRecords();
                 }
                 //좌석화면 연결됐고, 예약하기 버튼을 누를 때(ShowSeatFragment안에서 경로설정)
                 else if (showSeatFragment != null) {
@@ -64,13 +73,16 @@ public class ReservableWeekdaySelectHandler extends Handler {
             }
             //영업일이고
             else if (serviceEnable.equals("1")){
+
                 //다이얼로그에서 날짜를 선택했을 때
-                if (customDatePickerDialog != null) {
+/*                if (customDatePickerDialog != null) {
                     //홈화면 경고문 빈칸
+                    //로직 너무 꼬여서 경고문변경 보류
                     customDatePickerDialog.onRecords();
-                }
+                }*/
+
                 //좌석화면 연결됐고, 예약하기 버튼 누를 때
-                else if (showSeatFragment != null) {
+                if (showSeatFragment != null) {
                     //예약할 수 있는 시간대 보여주기
                     showSeatFragment.showTimePickerDialog(showSeatFragment.getSeatNum());
                 }
