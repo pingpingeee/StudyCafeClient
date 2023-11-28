@@ -6,15 +6,15 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import study.customer.gui.SettingFragment;
+import study.customer.gui.ReservationFragment;
 
 import java.util.ArrayList;
 
 
 public class ReserveSelectHandler extends Handler {
-    SettingFragment settingFragment;
+    ReservationFragment settingFragment;
 
-    public ReserveSelectHandler(SettingFragment settingFragment) {
+    public ReserveSelectHandler(ReservationFragment settingFragment) {
         super();
         this.settingFragment = settingFragment;
     }

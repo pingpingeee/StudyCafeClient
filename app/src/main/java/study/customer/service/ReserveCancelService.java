@@ -21,6 +21,8 @@ public class ReserveCancelService implements INetworkService {
     }
     @Override
     public boolean tryExecuteService() {
+        //TODO::read랑 write추가
+        //TODO::서버측에서 regdate지나면 삭제못하게 문자열 하나 더 받아오기
         m_netModule.writeLine("RESERVE_CANCEL_SERVICE");
         m_netModule.writeLine(NetworkLiteral.EOF);
 

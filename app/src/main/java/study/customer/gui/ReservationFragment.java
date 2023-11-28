@@ -18,13 +18,9 @@ import study.customer.service.ReserveSelectService;
 
 import java.util.ArrayList;
 
-public class SettingFragment extends Fragment {
+public class ReservationFragment extends Fragment {
     private ArrayList<String> lines = new ArrayList<>();
     private View view;
-    private String selectedRecordNum;
-    private String selectedSeatNum;
-    private String selectedReservationDate;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +53,8 @@ public class SettingFragment extends Fragment {
             TextView startTimeTextView = recordView.findViewById(R.id.startTime);
             TextView endTimeTextView = recordView.findViewById(R.id.endTime);
             TextView dayTextView = recordView.findViewById(R.id.day);
-            TextView btn = recordView.findViewById(R.id.btnOk);
+            TextView btnOpen = recordView.findViewById(R.id.btnOk);
+            TextView btnDelete = recordView.findViewById(R.id.btnDelete);
 
             //numTextView.setText(lines.get(i));
             numTextView.setText(String.valueOf(c));
@@ -83,17 +80,24 @@ public class SettingFragment extends Fragment {
             ViewGroup.LayoutParams layoutParams = recordView.getLayoutParams();
             layoutParams.height = 263;
             recordView.setLayoutParams(layoutParams);
-            recordView.setOnClickListener(new View.OnClickListener() {
+            btnOpen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int targetHeight = 508;
                     if (recordView.getHeight() == 263) {
-                        btn.setText("닫기");
+                        btnOpen.setText("닫기");
                         expandView(recordView, targetHeight);
                     } else {
-                        btn.setText("열기");
+                        btnOpen.setText("열기");
                         collapseView(recordView);
                     }
+                }
+            });
+            btnDelete.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    //TODO::삭제로직추가
                 }
             });
 
