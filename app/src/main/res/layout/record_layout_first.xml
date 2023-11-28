@@ -23,6 +23,11 @@
                 android:textSize="30dp"
                 android:text="24"
                 android:layout_marginTop="3dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/reserveId1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
             <!-- 구분선 -->
             <View
                 android:layout_marginLeft="10dp"
@@ -108,7 +113,10 @@
                 android:textColor="#000000"
                 android:textSize="14sp"/>
 
+
         </LinearLayout>
+
+
 
 
 

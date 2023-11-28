@@ -3,17 +3,26 @@ package study.customer.handler;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
 
 import study.customer.gui.ReservationFragment;
 
 public class ReserveCancelHandler extends Handler {
-    ReservationFragment settingFragment;
+    ReservationFragment reservationFragment;
+    private LinearLayout linearLayout;
+    private View recordView;
 
-    public ReserveCancelHandler(ReservationFragment settingFragment) {
+
+    public ReserveCancelHandler(ReservationFragment reservationFragment, LinearLayout linearLayout, View recordView) {
         super();
-        this.settingFragment = settingFragment;
+        this.reservationFragment = reservationFragment;
+        this.linearLayout = linearLayout;
+        this.recordView = recordView;
     }
 
     @Override
@@ -25,9 +34,10 @@ public class ReserveCancelHandler extends Handler {
 
         if (response.equals("<SUCCESS>")) {
             System.out.println("통신성공");
+            linearLayout.removeView(recordView);
         } else if (response.equals("<FAILURE>")) {
             System.out.println("없음");
-            settingFragment.noneRecords();
+            reservationFragment.updateFail();
         } else if (response.equals("<ERROR>")) {
             System.out.println("에러");
         } else {
