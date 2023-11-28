@@ -16,12 +16,63 @@ import androidx.appcompat.app.AppCompatActivity;
 import study.customer.handler.LoginHandler;
 import com.example.mysecondproject.R;
 
+import study.customer.main.CustomerManager;
 import study.customer.service.LoginService;
 
 import customfonts.MyTextView_Poppins_Medium;
 
 public class LoginActivity extends AppCompatActivity {
     LoginActivity loginActivity;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        loginActivity = this;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+
+        MyTextView_Poppins_Medium buttonSignUp = findViewById(R.id.buttonSignUp);
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        MyTextView_Poppins_Medium buttonLogin = findViewById(R.id.buttonLogin);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String account = ((EditText)findViewById(R.id.editTextAccount)).getText().toString().trim();
+                CustomerManager.getManager().setId(account);
+                String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString().trim();
+
+                if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+                    TextView errorTextView = findViewById(R.id.Error);
+                    errorTextView.setText("아이디와 비밀번호를 모두 입력하세요.");
+                    errorTextView.setTextColor(Color.RED);
+                    // 키패드 내리기
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                    // 아이디와 비밀번호 입력 칸 비우기
+                    ((EditText) findViewById(R.id.editTextAccount)).setText("");
+                    ((EditText) findViewById(R.id.editTextPassword)).setText("");
+
+                    return;
+                }
+
+                LoginHandler loginHandler;
+                loginHandler = new LoginHandler(loginActivity, v);
+                LoginService loginService = new LoginService(loginHandler, account, password);
+                loginService.bindNetworkModule(IntroActivity.networkModule);
+                IntroActivity.networkThread.requestService(loginService);
+
+
+            }
+        });
+    }
+
     public void showfailDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -47,55 +98,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         dialog.show();
-    }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        loginActivity = this;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-
-        MyTextView_Poppins_Medium buttonSignUp = findViewById(R.id.buttonSignUp);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        MyTextView_Poppins_Medium buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String account = ((EditText)findViewById(R.id.editTextAccount)).getText().toString().trim();
-                String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString().trim();
-
-                if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
-                    TextView errorTextView = findViewById(R.id.Error);
-                    errorTextView.setText("아이디와 비밀번호를 모두 입력하세요.");
-                    errorTextView.setTextColor(Color.RED);
-                    // 키패드 내리기
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                    // 아이디와 비밀번호 입력 칸 비우기
-                    ((EditText) findViewById(R.id.editTextAccount)).setText("");
-                    ((EditText) findViewById(R.id.editTextPassword)).setText("");
-
-                    return;
-                }
-
-                LoginHandler loginHandler;
-                loginHandler = new LoginHandler(loginActivity, v);
-                LoginService loginService = new LoginService(loginHandler, account, password);
-                loginService.bindNetworkModule(IntroActivity.networkModule);
-                //System.out.println(Thread.currentThread().getName());
-                IntroActivity.networkThread.requestService(loginService);
-
-
-            }
-        });
     }
 
 }

@@ -39,7 +39,6 @@ public class ReservableWeekdaySelectHandler extends Handler {
 
 
         if (response.equals("<SUCCESS>")) {
-            System.out.println("성공");
             //영업일아니고
             if (serviceEnable.equals("0")) {
                 //캘린더창 연결됐을때

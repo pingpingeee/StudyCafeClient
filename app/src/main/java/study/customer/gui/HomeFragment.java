@@ -179,7 +179,4 @@ public class HomeFragment extends Fragment {
         this.dayOfWeekString = dayOfWeekString;
     }
 
-    public String getSeatNum() {
-        return seatNum;
-    }
 }
