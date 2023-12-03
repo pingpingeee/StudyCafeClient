@@ -106,8 +106,7 @@
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"
-                    android:columnCount="2"
+                    android:columnCount="1"
                     android:rowCount="10">
 
                     <!-- 좌석 A1 ~ A10 -->
@@ -135,6 +134,16 @@
                         android:id="@+id/seat_10"
                         style="@style/SeatButton"
                         android:text="10" />
+
+
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:columnCount="1"
+                    android:rowCount="10">
 
                     <customfonts.MyTextView_Poppins_Medium
                         android:id="@+id/seat_11"
@@ -165,8 +174,7 @@
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"
-                    android:columnCount="2"
+                    android:columnCount="1"
                     android:rowCount="10">
 
                     <customfonts.MyTextView_Poppins_Medium
@@ -194,6 +202,14 @@
                         style="@style/SeatButton"
                         android:text="20" />
 
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:columnCount="1"
+                    android:rowCount="10">
                     <customfonts.MyTextView_Poppins_Medium
                         android:id="@+id/seat_21"
                         style="@style/SeatButton"
@@ -223,7 +239,6 @@
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
                     android:columnCount="2"
                     android:rowCount="10">
 
@@ -252,6 +267,15 @@
                         style="@style/SeatButton"
                         android:text="30" />
 
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:columnCount="1"
+                    android:rowCount="10">
+
                     <customfonts.MyTextView_Poppins_Medium
                         android:id="@+id/seat_31"
                         style="@style/SeatButton"
@@ -276,6 +300,7 @@
                         android:id="@+id/seat_35"
                         style="@style/SeatButton"
                         android:text="35" />
+
                 </GridLayout>
             </LinearLayout>
         </HorizontalScrollView>
