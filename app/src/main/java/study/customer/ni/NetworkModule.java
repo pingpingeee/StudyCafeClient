@@ -1,4 +1,4 @@
-package study.customer.in;
+package study.customer.ni;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

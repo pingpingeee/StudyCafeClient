@@ -1,4 +1,4 @@
-package study.customer.in;
+package study.customer.ni;
 
 public interface IService
 {

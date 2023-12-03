@@ -18,6 +18,8 @@ import study.customer.handler.ReserveSelectHandler;
 
 import com.example.mysecondproject.R;
 
+import study.customer.main.CustomerManager;
+import study.customer.main.NetworkManager;
 import study.customer.service.ReserveCancelService;
 import study.customer.service.ReserveSelectService;
 
@@ -25,24 +27,20 @@ import java.io.IOError;
 import java.util.ArrayList;
 
 public class ReservationFragment extends Fragment {
-    ReserveCancelHandler reserveCancelHandler;
-    private String reserveId;
-    private ArrayList<String> lines = new ArrayList<>();
+    private ArrayList<String> lines;
     private View view;
+    private ArrayList<ReservationRecord> m_records;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.fragment_reservation, container, false);
-
+        m_records = new ArrayList<ReservationRecord>();
 
         ReserveSelectHandler reserveSelectHandler;
         reserveSelectHandler = new ReserveSelectHandler(this);
-        ReserveSelectService reserveSelectService =
-                new ReserveSelectService(reserveSelectHandler);
-        reserveSelectService.bindNetworkModule(IntroActivity.networkModule);
-        IntroActivity.networkThread.requestService(reserveSelectService);
-
+        ReserveSelectService reserveSelectService = new ReserveSelectService(reserveSelectHandler);
+        CustomerManager.getManager().requestService(reserveSelectService);
 
         return view;
     }
@@ -51,115 +49,32 @@ public class ReservationFragment extends Fragment {
         TextView text = view.findViewById(R.id.text);
         text.setText("등록된 예약내역이 없습니다.");
     }
-    public void updateRecords(ArrayList<String> lines) {
-        lines = this.lines;
-        int c = 1;
-        LinearLayout containerLayout = getView().findViewById(R.id.recordsContainer);
 
-            for (int i = 0; i < lines.size(); i += 5) {
-                View recordView = getLayoutInflater().inflate(R.layout.record_layout_first, containerLayout, false);
-                TextView numTextView = recordView.findViewById(R.id.num);
-                TextView seatNumTextView = recordView.findViewById(R.id.seatNum);
-                TextView startTimeTextView = recordView.findViewById(R.id.startTime);
-                TextView endTimeTextView = recordView.findViewById(R.id.endTime);
-                TextView dayTextView = recordView.findViewById(R.id.day);
-                TextView btnOpen = recordView.findViewById(R.id.btnOk);
-                TextView btnDelete = recordView.findViewById(R.id.btnDelete);
-                TextView reserveId1 = recordView.findViewById(R.id.reserveId1);
+    public void updateRecords(ArrayList<String> lines)
+    {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
+        for (int i = 0; i < lines.size(); i += 5)
+        {
+            ReservationRecord record = new ReservationRecord(this, lines, i);
+            m_records.add(record);
+            transaction.add(record, "ReservationRecord");
+        }
 
-                numTextView.setText(String.valueOf(c));
-                reserveId1.setText(String.valueOf(lines.get(i)));
-                //numTextView.setText(String.valueOf(lines.get(i)));
-
-
-                seatNumTextView.setText("좌석 : " + lines.get(i + 1));
-
-                String startTime = lines.get(i + 2);
-                String[] startTimeParts = startTime.split(":");
-                String formattedStartTime = startTimeParts[0] + "시";
-                startTimeTextView.setText("시작 시간 : " + formattedStartTime);
-
-
-                String endTime = lines.get(i + 3);
-                String[] endTimeParts = endTime.split(":");
-                String formattedEndTime = endTimeParts[0] + "시";
-                endTimeTextView.setText("종료 시간 : " + formattedEndTime);
-
-
-                String day = lines.get(i + 4);
-                String[] dayParts = day.split(":");
-                String formattedDay = dayParts[0] + ":" + dayParts[1];
-                dayTextView.setText("등록한 시간\n" + formattedDay);
-
-
-                ViewGroup.LayoutParams layoutParams = recordView.getLayoutParams();
-                layoutParams.height = 263;
-                recordView.setLayoutParams(layoutParams);
-                btnOpen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int targetHeight = 508;
-                        if (recordView.getHeight() == 263) {
-                            btnOpen.setText("닫기");
-                            expandView(recordView, targetHeight);
-                        } else {
-                            btnOpen.setText("열기");
-                            collapseView(recordView);
-                        }
-                    }
-                });
-
-                TextView text = view.findViewById(R.id.text);
-                text.setText("");
-                reserveCancelHandler = new ReserveCancelHandler(this, containerLayout, recordView);
-                btnDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                        View dialogView = getLayoutInflater().inflate(R.layout.question_mark_dialog, null);
-                        builder.setView(dialogView);
-
-                        customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
-                        MyTextView_Poppins_Medium btnNo = dialogView.findViewById(R.id.btnNo);
-                        MyTextView_Poppins_Medium btnYes = dialogView.findViewById(R.id.btnYes);
-
-                        dialogTitle.setText("정말로 삭제하시겠습니까?");
-                        btnNo.setText("아니요");
-                        btnYes.setText("네");
-
-                        AlertDialog dialog = builder.create();
-
-                        btnYes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                reserveId = String.valueOf(reserveId1.getText());
-
-                                ReserveCancelService reserveCancelService =
-                                        new ReserveCancelService(reserveCancelHandler, reserveId);
-                                reserveCancelService.bindNetworkModule(IntroActivity.networkModule);
-                                IntroActivity.networkThread.requestService(reserveCancelService);
-
-                                dialog.dismiss();
-                            }
-                        });
-                        btnNo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                dialog.dismiss();
-                            }
-                        });
-                        dialog.show();
-                    }
-                });
-
-                containerLayout.addView(recordView);
-                c++;
-            }
-
+        transaction.commit();
     }
+
+    public void removeRecord(ReservationRecord _record)
+    {
+        if(!m_records.remove(_record))
+            return;
+
+        _record.removeRecordFromView();
+
+        for(int i = 0; i < m_records.size(); ++i)
+            m_records.get(i).setFragmentId(i + 1);
+    }
+
     public void updateFail() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -218,7 +133,9 @@ public class ReservationFragment extends Fragment {
 
         slideAnimator.start();
     }
-    public void setLines(ArrayList<String> lines) {
+
+    public void setLines(ArrayList<String> lines)
+    {
         this.lines = lines;
     }
 }

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Message;
 
 import study.customer.handler.ReservableWeekdaySelectHandler;
-import study.customer.in.INetworkModule;
-import study.customer.in.INetworkService;
+import study.customer.ni.INetworkModule;
+import study.customer.ni.INetworkService;
 
 public class ReservableWeekdaySelectService implements INetworkService {
     private INetworkModule m_netModule;

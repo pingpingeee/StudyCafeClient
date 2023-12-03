@@ -2,10 +2,10 @@ package study.customer.main;
 
 import java.net.Socket;
 
-public class ServerCon {
-
-    public static Socket connectToServer() {
-
+public class ServerCon
+{
+    public static synchronized Socket connectToServer()
+    {
         //본인아이피
         final String SERVER_IP = "";
 
@@ -14,6 +14,8 @@ public class ServerCon {
 
         try {
             Socket clientSocket = new Socket(SERVER_IP, SERVER_PORT);
+            clientSocket.getOutputStream().write(1);
+            clientSocket.getOutputStream().flush();
             return clientSocket;
         } catch (Exception e) {
             e.printStackTrace();

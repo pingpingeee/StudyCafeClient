@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.os.Message;
 
 import study.customer.handler.JoinHandler;
-import study.customer.in.INetworkModule;
-import study.customer.in.INetworkService;
-import study.customer.in.NetworkLiteral;
+import study.customer.ni.INetworkModule;
+import study.customer.ni.INetworkService;
+import study.customer.ni.NetworkLiteral;
 
 
 public class JoinService implements INetworkService

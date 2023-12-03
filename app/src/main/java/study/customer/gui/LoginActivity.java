@@ -17,18 +17,26 @@ import study.customer.handler.LoginHandler;
 import com.example.mysecondproject.R;
 
 import study.customer.main.CustomerManager;
+import study.customer.main.NetworkManager;
 import study.customer.service.LoginService;
 
 import customfonts.MyTextView_Poppins_Medium;
 
 public class LoginActivity extends AppCompatActivity {
-    LoginActivity loginActivity;
+    private EditText etxtAccount;
+    private EditText etxtPassword;
+    private TextView errorTextView;
+    private InputMethodManager imm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loginActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        etxtAccount = ((EditText)super.findViewById((R.id.editTextAccount)));
+        etxtPassword = ((EditText)super.findViewById(R.id.editTextPassword));
+        errorTextView = findViewById(R.id.Error);
+        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
         MyTextView_Poppins_Medium buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -40,40 +48,56 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         MyTextView_Poppins_Medium buttonLogin = findViewById(R.id.buttonLogin);
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String account = ((EditText)findViewById(R.id.editTextAccount)).getText().toString().trim();
-                CustomerManager.getManager().setId(account);
-                String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString().trim();
+                String account = etxtAccount.getText().toString().trim();
+                String password = etxtPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
-                    TextView errorTextView = findViewById(R.id.Error);
-                    errorTextView.setText("아이디와 비밀번호를 모두 입력하세요.");
-                    errorTextView.setTextColor(Color.RED);
                     // 키패드 내리기
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                     // 아이디와 비밀번호 입력 칸 비우기
-                    ((EditText) findViewById(R.id.editTextAccount)).setText("");
-                    ((EditText) findViewById(R.id.editTextPassword)).setText("");
+                    etxtAccount.setText("");
+                    etxtPassword.setText("");
 
+                    errorTextView.setText("아이디와 비밀번호를 모두 입력하세요.");
+                    errorTextView.setTextColor(Color.RED);
                     return;
                 }
 
-                LoginHandler loginHandler;
-                loginHandler = new LoginHandler(loginActivity, v);
+                LoginHandler loginHandler = new LoginHandler(LoginActivity.this, v);
                 LoginService loginService = new LoginService(loginHandler, account, password);
-                loginService.bindNetworkModule(IntroActivity.networkModule);
-                IntroActivity.networkThread.requestService(loginService);
-
-
+                CustomerManager.getManager().requestService(loginService);
             }
         });
     }
 
-    public void showfailDialog() {
+    public void onResponseSuccess()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onResponseBlackedAccount()
+    {
+        this.showfailDialog();
+    }
+
+    public void onResponseFailure(View view)
+    {
+        errorTextView.setTextColor(Color.RED);
+        errorTextView.setText("아이디 또는 비밀번호가 올바르지 않습니다.");
+
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+        etxtAccount.setText("");
+        etxtPassword.setText("");
+    }
+
+    private void showfailDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
@@ -99,5 +123,4 @@ public class LoginActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
 }

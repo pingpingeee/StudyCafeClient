@@ -1,4 +1,4 @@
-package study.customer.main;
+package study.customer.gui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +15,14 @@ import study.customer.gui.InfoFragment;
 import study.customer.gui.ReservationFragment;
 
 public class MainActivity extends AppCompatActivity {
-    HomeFragment homeFragment;
-    InfoFragment infoFragment;
-    ReservationFragment reservationFragment;
+    private HomeFragment homeFragment;
+    private InfoFragment infoFragment;
+    private ReservationFragment reservationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         homeFragment = new HomeFragment();
         infoFragment = new InfoFragment();
@@ -50,5 +49,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

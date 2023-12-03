@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.os.Message;
 
 import study.customer.handler.ReserveSelectHandler;
-import study.customer.in.Service;
+import study.customer.ni.Service;
 import study.customer.main.CustomerManager;
-import study.customer.in.INetworkModule;
-import study.customer.in.INetworkService;
-import study.customer.in.NetworkLiteral;
+import study.customer.ni.INetworkModule;
+import study.customer.ni.INetworkService;
+import study.customer.ni.NetworkLiteral;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -18,7 +18,6 @@ public class ReserveSelectService extends Service implements INetworkService {
     ReserveSelectHandler reserveSelectHandler;
     private INetworkModule m_netModule;
 
-
     public ReserveSelectService(ReserveSelectHandler reserveSelectHandler) {
         this.reserveSelectHandler = reserveSelectHandler;
     }
@@ -26,9 +25,8 @@ public class ReserveSelectService extends Service implements INetworkService {
     @Override
     public boolean tryExecuteService() {
         m_netModule.writeLine("RESERVE_SELECT_SERVICE");
-        m_netModule.writeLine(Integer.toString(CustomerManager.getManager().getUuid()));
+        m_netModule.writeLine(Integer.toString(CustomerManager.getManager().getLoginData().getUuid()));
         m_netModule.writeLine(NetworkLiteral.EOF);
-
 
         Vector<String> lines = new Vector<String>();
 
@@ -37,7 +35,6 @@ public class ReserveSelectService extends Service implements INetworkService {
             if (line.equals(NetworkLiteral.EOF)) break;
             lines.add(line);
         }
-
 
         String response = m_netModule.readLine();
 

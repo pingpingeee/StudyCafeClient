@@ -1,6 +1,4 @@
-package study.customer.in;
-
-import study.customer.in.ThreadState;
+package study.customer.ni;
 
 public abstract class StudyThread implements Runnable
 {
