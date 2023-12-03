@@ -17,7 +17,6 @@ import study.customer.handler.LoginHandler;
 import com.example.mysecondproject.R;
 
 import study.customer.main.CustomerManager;
-import study.customer.main.NetworkManager;
 import study.customer.service.LoginService;
 
 import customfonts.MyTextView_Poppins_Medium;
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showfailDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
         builder.setView(dialogView);
 
         customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

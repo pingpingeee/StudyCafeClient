@@ -6,24 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import customfonts.MyTextView_Poppins_Medium;
-import study.customer.handler.ReserveCancelHandler;
 import study.customer.handler.ReserveSelectHandler;
 
 import com.example.mysecondproject.R;
 
 import study.customer.main.CustomerManager;
-import study.customer.main.NetworkManager;
-import study.customer.service.ReserveCancelService;
 import study.customer.service.ReserveSelectService;
 
-import java.io.IOError;
 import java.util.ArrayList;
 
 public class ReservationFragment extends Fragment {
@@ -78,7 +73,7 @@ public class ReservationFragment extends Fragment {
     public void updateFail() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
         builder.setView(dialogView);
 
         customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

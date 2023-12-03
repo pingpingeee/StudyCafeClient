@@ -2,7 +2,6 @@ package study.customer.gui;
 
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import customfonts.MyTextView_Poppins_Medium;
 import study.customer.handler.ReserveCancelHandler;
 import study.customer.main.CustomerManager;
-import study.customer.main.NetworkManager;
 import study.customer.service.ReserveCancelService;
 
 public class ReservationRecord extends Fragment
@@ -109,7 +107,7 @@ public class ReservationRecord extends Fragment
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                View dialogView = getLayoutInflater().inflate(R.layout.question_mark_dialog, null);
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_question, null);
                 builder.setView(dialogView);
 
                 customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

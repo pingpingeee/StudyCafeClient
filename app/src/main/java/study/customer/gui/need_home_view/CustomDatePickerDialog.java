@@ -130,7 +130,7 @@ public class CustomDatePickerDialog extends Dialog {
                 // TODO: 경고창을 코드 분리할 수 있는지 생각해 볼 필요 있습니다.
                 AlertDialog.Builder builder = new AlertDialog.Builder(CustomDatePickerDialog.this.getContext());
 
-                View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
                 builder.setView(dialogView);
 
                 customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

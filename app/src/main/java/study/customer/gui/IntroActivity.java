@@ -29,7 +29,7 @@ public class IntroActivity extends AppCompatActivity {
                 CustomerManager.getManager().setIntroHandler(handler);
                 CustomerManager.getManager().start();
             }
-        },1000);  //1000으로 변경
+        },100);  //1000으로 변경
     }
 
     @Override

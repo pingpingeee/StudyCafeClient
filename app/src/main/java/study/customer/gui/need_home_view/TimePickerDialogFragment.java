@@ -16,7 +16,6 @@ import androidx.fragment.app.DialogFragment;
 
 import study.customer.handler.ReserveHandler;
 import study.customer.handler.TimetableSelectHandler;
-import study.customer.gui.HomeFragment;
 
 import com.example.mysecondproject.R;
 
@@ -25,13 +24,8 @@ import study.customer.main.IResponsable;
 import study.customer.service.ReserveService;
 import study.customer.service.TimetableSelectService;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import customfonts.MyTextView_Poppins_Medium;
 
@@ -111,7 +105,7 @@ public class TimePickerDialogFragment extends DialogFragment {
     private void showReservationErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
-        View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
         builder.setView(dialogView);
 
         customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
@@ -137,7 +131,7 @@ public class TimePickerDialogFragment extends DialogFragment {
         String confirmationMessage = seatNum + "번 좌석, " + selectedTime + "에 예약이 완료되었습니다.";
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
-        View dialogView = getLayoutInflater().inflate(R.layout.success_dialog, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_success, null);
         builder.setView(dialogView);
 
         MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

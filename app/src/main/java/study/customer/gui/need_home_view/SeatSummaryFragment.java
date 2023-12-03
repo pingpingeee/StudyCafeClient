@@ -1,7 +1,6 @@
 package study.customer.gui.need_home_view;
 
 import android.app.Dialog;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.fragment.app.DialogFragment;
 
 import study.customer.handler.ReservableWeekdaySelectHandler;
 import study.customer.handler.SeatSelectHandler;
-import study.customer.gui.HomeFragment;
 
 import com.example.mysecondproject.R;
 
@@ -24,13 +22,9 @@ import study.customer.main.IResponsable;
 import study.customer.service.ReservableWeekdaySelectService;
 import study.customer.service.SeatSelectService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import customfonts.MyTextView_Poppins_Medium;
 
@@ -157,7 +151,7 @@ public class SeatSummaryFragment extends DialogFragment {
                 System.out.println("onReservableWeekdaySelectHandlerFailure");
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                View dialogView = getLayoutInflater().inflate(R.layout.fail_dialog, null);
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
                 builder.setView(dialogView);
 
                 customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);

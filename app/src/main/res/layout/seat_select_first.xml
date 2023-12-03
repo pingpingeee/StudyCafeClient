@@ -33,16 +33,6 @@
         android:padding="16dp"/>
 
 
-    <TextView
-        android:id="@+id/error"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="12sp"
-
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:padding="16dp"/>
 
 
     <LinearLayout

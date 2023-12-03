@@ -33,7 +33,7 @@ public class JoinActivity extends AppCompatActivity {
     public void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        View dialogView = getLayoutInflater().inflate(R.layout.success_dialog, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_success, null);
         builder.setView(dialogView);
 
         customfonts.MyTextView_Poppins_Medium dialogTitle = dialogView.findViewById(R.id.dialog_title);
