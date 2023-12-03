@@ -42,6 +42,7 @@
             android:padding="16dp"/>
 
         <TextView
+            android:layout_marginTop="-20dp"
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,20 +60,91 @@
 
 
         <HorizontalScrollView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
             android:layerType="software">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <View
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="6dp"
+                    android:layout_height="200dp"
+                    android:background="@color/blue" />
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="45dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="-55dp"
+                    android:background="@drawable/man" />
+
+                <View
+                    android:layout_marginTop="95dp"
+                    android:layout_marginRight="-71dp"
+                    android:layout_width="70dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+
+                <ImageView
+                    android:layout_marginTop="110dp"
+                    android:layout_width="45dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="-55dp"
+                    android:background="@drawable/woman" />
+
+                <View
+                    android:layout_marginTop="194dp"
+                    android:layout_marginRight="-70dp"
+                    android:layout_width="70dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+                <View
+
+                    android:layout_marginRight="-120dp"
+                    android:layout_width="120dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+
+                <ImageView
+                    android:layout_marginTop="300dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="-75dp"
+                    android:background="@drawable/smoke" />
+
+                <!-- 구분선 -->
+                <View
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="-20dp"
+                    android:layout_width="6dp"
+                    android:layout_height="353dp"
+                    android:background="@color/blue" />
+                <View
+                    android:layout_marginTop="327dp"
+                    android:layout_marginRight="-100dp"
+                    android:layout_width="100dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+
+                <View
+                    android:layout_width="868dp"
+                    android:layout_marginRight="-868dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
 
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="50dp"
                     android:columnCount="1"
                     android:rowCount="5">
@@ -102,11 +174,15 @@
                         android:id="@+id/seat_5"
                         style="@style/SeatButton"
                         android:text="5" />
+
+
+
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:columnCount="1"
                     android:rowCount="10">
 
@@ -135,13 +211,20 @@
                         android:id="@+id/seat_10"
                         style="@style/SeatButton"
                         android:text="10" />
-
+                    <View
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
 
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="50dp"
                     android:columnCount="1"
                     android:rowCount="10">
@@ -170,11 +253,20 @@
                         android:id="@+id/seat_15"
                         style="@style/SeatButton"
                         android:text="15" />
+
+                    <View
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="120dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:columnCount="1"
                     android:rowCount="10">
 
@@ -202,12 +294,20 @@
                         android:id="@+id/seat_20"
                         style="@style/SeatButton"
                         android:text="20" />
+                    <View
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
 
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="50dp"
                     android:columnCount="1"
                     android:rowCount="10">
@@ -235,11 +335,19 @@
                         android:id="@+id/seat_25"
                         style="@style/SeatButton"
                         android:text="25" />
+                    <View
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="120dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:columnCount="1"
                     android:rowCount="10">
 
@@ -267,13 +375,21 @@
                         android:id="@+id/seat_30"
                         style="@style/SeatButton"
                         android:text="30" />
+                    <View
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
 
                 </GridLayout>
 
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="16dp"
                     android:columnCount="1"
                     android:rowCount="10">
 
@@ -301,22 +417,63 @@
                         android:id="@+id/seat_35"
                         style="@style/SeatButton"
                         android:text="35" />
+                    <View
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="-100dp"
+                        android:layout_width="120dp"
+                        android:layout_height="6dp"
+                        android:background="@color/blue" />
 
                 </GridLayout>
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="380dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/blue" />
+                <View
+                    android:layout_marginTop="380dp"
+                    android:layout_marginLeft="-515dp"
+                    android:layout_width="500dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+
+                <View
+                    android:layout_marginTop="380dp"
+                    android:layout_marginLeft="-500dp"
+                    android:layout_width="6dp"
+                    android:layout_height="80dp"
+                    android:background="@color/blue" />
+
+                <View
+                    android:layout_marginTop="455dp"
+                    android:layout_marginLeft="-380dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_width="382dp"
+                    android:layout_height="6dp"
+                    android:background="@color/blue" />
+
+                <View
+                    android:layout_marginTop="380dp"
+                    android:layout_marginLeft="-385dp"
+                    android:layout_width="6dp"
+                    android:layout_height="80dp"
+                    android:background="@color/blue" />
+
+
             </LinearLayout>
         </HorizontalScrollView>
         <customfonts.MyTextView_Poppins_Medium
             android:id="@+id/buttonLogin"
             android:layout_width="150dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginLeft="62dp"
-            android:layout_marginTop="18.7dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="62dp"
             android:background="@drawable/blue_box"
             android:gravity="center"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:layout_marginBottom="20dp"
             android:text="날짜 선택"
             android:textColor="#ffffff"
