@@ -53,7 +53,7 @@ public class SeatSummaryFragment extends DialogFragment {
         CustomerManager.getManager().requestService(seatSelectService);
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.seat_select_first, null);
+        view = inflater.inflate(R.layout.dialog_seat_select, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.TimePickerDialogTheme);
         builder.setTitle(seatNum + "번 좌석 예약정보").setView(view);

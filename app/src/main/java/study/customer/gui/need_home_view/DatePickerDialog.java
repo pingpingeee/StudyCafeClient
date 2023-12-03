@@ -23,7 +23,7 @@ import study.customer.service.ReservableWeekdaySelectService;
 
 import customfonts.MyTextView_Poppins_Medium;
 
-public class CustomDatePickerDialog extends Dialog {
+public class DatePickerDialog extends Dialog {
 
     private DatePicker datePicker;
     private MyTextView_Poppins_Medium buttonCancel;
@@ -42,7 +42,7 @@ public class CustomDatePickerDialog extends Dialog {
     private IResponsable<String> m_onTimePickSuccess;
     private IResponsable<String> m_onTimePickFailure;
 
-    public CustomDatePickerDialog(@NotNull Context _context)
+    public DatePickerDialog(@NotNull Context _context)
     {
         super(_context);
         m_handler = new ReservableWeekdaySelectHandler();
@@ -52,7 +52,7 @@ public class CustomDatePickerDialog extends Dialog {
         m_handler.setOnDefault(new onServiceFailure());
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.custom_date_picker_dialog);
+        setContentView(R.layout.dialog_date_picker);
 
         datePicker = findViewById(R.id.datePicker);
         buttonCancel = findViewById(R.id.buttonCancel);
@@ -128,7 +128,7 @@ public class CustomDatePickerDialog extends Dialog {
             {
                 //경고창
                 // TODO: 경고창을 코드 분리할 수 있는지 생각해 볼 필요 있습니다.
-                AlertDialog.Builder builder = new AlertDialog.Builder(CustomDatePickerDialog.this.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(DatePickerDialog.this.getContext());
 
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_fail, null);
                 builder.setView(dialogView);

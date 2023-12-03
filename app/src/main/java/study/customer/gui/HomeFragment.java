@@ -1,7 +1,5 @@
 package study.customer.gui;
 
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +14,7 @@ import study.customer.handler.ReservableWeekdaySelectHandler;
 
 import com.example.mysecondproject.R;
 
-import study.customer.gui.need_home_view.CustomDatePickerDialog;
+import study.customer.gui.need_home_view.DatePickerDialog;
 import study.customer.gui.need_home_view.SeatSummaryFragment;
 import study.customer.main.CustomerManager;
 import study.customer.main.IResponsable;
@@ -24,7 +22,6 @@ import study.customer.main.LocaleManager;
 import study.customer.service.ReservableWeekdaySelectService;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 import customfonts.MyTextView_Poppins_Medium;
 
@@ -111,8 +108,8 @@ public class HomeFragment extends Fragment {
 
     // 날짜선택 다이얼로그
     private void showDatePicker() {
-        CustomDatePickerDialog customDatePickerDialog;
-        customDatePickerDialog = new CustomDatePickerDialog(requireContext());
+        DatePickerDialog customDatePickerDialog;
+        customDatePickerDialog = new DatePickerDialog(requireContext());
         customDatePickerDialog.setOnTimePickSuccess(new OnTimePickSuccess());
         customDatePickerDialog.setOnTimePickFailure(new OnTimePickFailure());
         customDatePickerDialog.show();
