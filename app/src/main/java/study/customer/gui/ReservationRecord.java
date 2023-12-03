@@ -29,9 +29,10 @@ public class ReservationRecord extends Fragment
     private int fragmentId;
     private int reserveId;
     private int seatId;
-    private LocalDateTime timeBegin;
-    private LocalDateTime timeEnd;
-    private LocalDateTime reservationDate;
+    private int anymationReserve;
+    private String timeBegin;
+    private String timeEnd;
+    private String reservationDate;
 
     private View recordView;
     private TextView numTextView;
@@ -43,6 +44,7 @@ public class ReservationRecord extends Fragment
     private TextView btnDelete;
     private TextView reserveIdView;
 
+
     public ReservationRecord(ReservationFragment _reservationFragment, ArrayList<String> _lines, int _startIndex)
     {
         reservationFragment = _reservationFragment;
@@ -53,10 +55,25 @@ public class ReservationRecord extends Fragment
 
         seatId = Integer.parseInt(_lines.get(_startIndex + 1));
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        timeBegin = LocalDateTime.parse(_lines.get(_startIndex + 2), dateTimeFormatter);
-        timeEnd = LocalDateTime.parse(_lines.get(_startIndex + 3), dateTimeFormatter);
-        reservationDate = LocalDateTime.parse(_lines.get(_startIndex + 4), dateTimeFormatter);
+        //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String startTime = _lines.get(_startIndex + 2);
+        String[] startTimeParts = startTime.split(":");
+        timeBegin = startTimeParts[0] + "시";
+        System.out.println(timeBegin);
+
+        String endTime = _lines.get(_startIndex + 3);
+        String[] endTimeParts = endTime.split(":");
+        timeEnd = endTimeParts[0] + "시";
+
+        String day = _lines.get(_startIndex + 4);
+        String[] dayParts = day.split(":");
+        reservationDate = dayParts[0] + ":" + dayParts[1];
+
+        //timeBegin = LocalDateTime.parse(_lines.get(_startIndex + 2), dateTimeFormatter);
+        //timeEnd = LocalDateTime.parse(_lines.get(_startIndex + 3), dateTimeFormatter);
+        //reservationDate = LocalDateTime.parse(_lines.get(_startIndex + 4), dateTimeFormatter);
+
     }
 
     @Override
@@ -73,24 +90,26 @@ public class ReservationRecord extends Fragment
         btnDelete = recordView.findViewById(R.id.btnDelete);
         reserveIdView = recordView.findViewById(R.id.reserveId1);
 
+
         numTextView.setText(String.valueOf(fragmentId));
         reserveIdView.setText(String.format("%d", reserveId));
         seatNumTextView.setText(String.format("좌석 : %d", seatId));
-        startTimeTextView.setText(String.format("시작 시간 : %d시", timeBegin.getHour()));
-        endTimeTextView.setText(String.format("종료 시간 : %d시", timeEnd.getHour()));
-        dayTextView.setText(String.format("등록한 시간\n%s", reservationDate.toString()));
+        startTimeTextView.setText("시작 시간 : " + timeBegin);
+        endTimeTextView.setText("종료 시간 : " + timeEnd);
+        dayTextView.setText("등록한 시간\n" + reservationDate);
 
         // 현재 layoutParams == null임.
         ViewGroup.LayoutParams layoutParams = recordView.getLayoutParams();
 
-        layoutParams.height = 263;
+        layoutParams.height = 205;
+        anymationReserve = layoutParams.height;
         recordView.setLayoutParams(layoutParams);
-
+        System.out.println();
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int targetHeight = 508;
-                if (recordView.getHeight() == 263) {
+                int targetHeight = 340;
+                if (recordView.getHeight() == anymationReserve) {
                     btnOpen.setText("닫기");
                     expandView(recordView, targetHeight);
                 } else {
@@ -175,7 +194,7 @@ public class ReservationRecord extends Fragment
 
     private void collapseView(final View view) {
         ValueAnimator slideAnimator = ValueAnimator
-                .ofInt(view.getHeight(), 263)
+                .ofInt(view.getHeight(), anymationReserve)
                 .setDuration(300);
 
         slideAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

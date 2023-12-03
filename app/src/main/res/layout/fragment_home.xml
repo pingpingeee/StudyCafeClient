@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -239,7 +240,7 @@
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:columnCount="2"
+                    android:columnCount="1"
                     android:rowCount="10">
 
                     <customfonts.MyTextView_Poppins_Medium
