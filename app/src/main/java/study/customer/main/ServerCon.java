@@ -7,7 +7,7 @@ public class ServerCon
     public static synchronized Socket connectToServer()
     {
         //본인아이피
-        final String SERVER_IP = "192.168.200.104";
+        final String SERVER_IP = "";
 
         //포트
         final int SERVER_PORT = 25561;
