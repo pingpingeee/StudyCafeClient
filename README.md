@@ -18,3 +18,20 @@
 - study.customer.main : 이용자측 관련코드
 - study.customer.handler : 서비스와 통신
 - study.cutomer.service : 핸들러와 통신
+
+## 화면
+
+##### 로그인&회원가입
+![image](https://github.com/user-attachments/assets/25084b9b-194c-4317-a4f0-eb7f6383fea7)
+
+##### 메인홈
+![image](https://github.com/user-attachments/assets/d0886316-2b99-4543-8dee-5ad0599161b9)
+
+##### 예약 및 예약 정보 확인
+![image](https://github.com/user-attachments/assets/5a52e5d9-e24b-420e-857c-ac6c62ea0adc)
+
+##### 예약 성공 / 실패
+![image](https://github.com/user-attachments/assets/a1a8eb3a-ec9c-490b-a1b8-e2ffc0c0eb0b)
+
+##### 예약 내역 확인 및 취소
+![image](https://github.com/user-attachments/assets/d8d2cb76-1dcd-4320-b676-e67a384a4f6b)
