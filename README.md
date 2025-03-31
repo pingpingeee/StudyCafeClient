@@ -1,6 +1,9 @@
 # StudyCafeClient
 
-## 개요
+
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
+  <img src="https://img.shields.io/badge/android-#3DDC84?style=for-the-badge&logo=oracle&logoColor=white">
 
 ### 개발 환경
 - IDE: Android Studio 2022.3.1.19
