@@ -4,6 +4,9 @@
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
 
+
+  2023.10 ~ 2023.11
+
 # 📱 Android 애플리케이션 개발 환경
 
 | 구분 | 내용
